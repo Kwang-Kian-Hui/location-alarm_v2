@@ -11,5 +11,4 @@ class AlarmListState with _$AlarmListState {
   const factory AlarmListState.noConnection() = NoConnection;
   const factory AlarmListState.noLocationService() = NoLocationService;
   const factory AlarmListState.loaded(List<Alarm> alarmList) = Loaded;
-  const factory AlarmListState.error(String errorMessage) = Error;
 }

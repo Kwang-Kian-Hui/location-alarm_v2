@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/database/fields.dart';
 import 'package:sqflite/sqflite.dart';

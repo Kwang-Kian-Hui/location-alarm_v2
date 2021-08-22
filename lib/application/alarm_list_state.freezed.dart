@@ -37,12 +37,6 @@ class _$AlarmListStateTearOff {
       alarmList,
     );
   }
-
-  Error error(String errorMessage) {
-    return Error(
-      errorMessage,
-    );
-  }
 }
 
 /// @nodoc
@@ -57,7 +51,6 @@ mixin _$AlarmListState {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,7 +60,6 @@ mixin _$AlarmListState {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,7 +70,6 @@ mixin _$AlarmListState {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,7 +79,6 @@ mixin _$AlarmListState {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -153,7 +143,6 @@ class _$Initial extends Initial {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) {
     return initial();
   }
@@ -166,7 +155,6 @@ class _$Initial extends Initial {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -183,7 +171,6 @@ class _$Initial extends Initial {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) {
     return initial(this);
   }
@@ -196,7 +183,6 @@ class _$Initial extends Initial {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -253,7 +239,6 @@ class _$Loading extends Loading {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) {
     return loading();
   }
@@ -266,7 +251,6 @@ class _$Loading extends Loading {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -283,7 +267,6 @@ class _$Loading extends Loading {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) {
     return loading(this);
   }
@@ -296,7 +279,6 @@ class _$Loading extends Loading {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -356,7 +338,6 @@ class _$NoConnection extends NoConnection {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) {
     return noConnection();
   }
@@ -369,7 +350,6 @@ class _$NoConnection extends NoConnection {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (noConnection != null) {
@@ -386,7 +366,6 @@ class _$NoConnection extends NoConnection {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) {
     return noConnection(this);
   }
@@ -399,7 +378,6 @@ class _$NoConnection extends NoConnection {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (noConnection != null) {
@@ -459,7 +437,6 @@ class _$NoLocationService extends NoLocationService {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) {
     return noLocationService();
   }
@@ -472,7 +449,6 @@ class _$NoLocationService extends NoLocationService {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (noLocationService != null) {
@@ -489,7 +465,6 @@ class _$NoLocationService extends NoLocationService {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) {
     return noLocationService(this);
   }
@@ -502,7 +477,6 @@ class _$NoLocationService extends NoLocationService {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (noLocationService != null) {
@@ -585,7 +559,6 @@ class _$Loaded extends Loaded {
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
     required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
   }) {
     return loaded(alarmList);
   }
@@ -598,7 +571,6 @@ class _$Loaded extends Loaded {
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
     TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -615,7 +587,6 @@ class _$Loaded extends Loaded {
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
     required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
   }) {
     return loaded(this);
   }
@@ -628,7 +599,6 @@ class _$Loaded extends Loaded {
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
     TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -645,134 +615,4 @@ abstract class Loaded extends AlarmListState {
   List<Alarm> get alarmList => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
-      _$ErrorCopyWithImpl<$Res>;
-  $Res call({String errorMessage});
-}
-
-/// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$AlarmListStateCopyWithImpl<$Res>
-    implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
-      : super(_value, (v) => _then(v as Error));
-
-  @override
-  Error get _value => super._value as Error;
-
-  @override
-  $Res call({
-    Object? errorMessage = freezed,
-  }) {
-    return _then(Error(
-      errorMessage == freezed
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$Error extends Error {
-  const _$Error(this.errorMessage) : super._();
-
-  @override
-  final String errorMessage;
-
-  @override
-  String toString() {
-    return 'AlarmListState.error(errorMessage: $errorMessage)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is Error &&
-            (identical(other.errorMessage, errorMessage) ||
-                const DeepCollectionEquality()
-                    .equals(other.errorMessage, errorMessage)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(errorMessage);
-
-  @JsonKey(ignore: true)
-  @override
-  $ErrorCopyWith<Error> get copyWith =>
-      _$ErrorCopyWithImpl<Error>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() noConnection,
-    required TResult Function() noLocationService,
-    required TResult Function(List<Alarm> alarmList) loaded,
-    required TResult Function(String errorMessage) error,
-  }) {
-    return error(errorMessage);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? noConnection,
-    TResult Function()? noLocationService,
-    TResult Function(List<Alarm> alarmList)? loaded,
-    TResult Function(String errorMessage)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(errorMessage);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(NoConnection value) noConnection,
-    required TResult Function(NoLocationService value) noLocationService,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(NoConnection value)? noConnection,
-    TResult Function(NoLocationService value)? noLocationService,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Error extends AlarmListState {
-  const factory Error(String errorMessage) = _$Error;
-  const Error._() : super._();
-
-  String get errorMessage => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }

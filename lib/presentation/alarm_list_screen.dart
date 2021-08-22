@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:location_alarm/application/alarm.dart';
-import 'package:location_alarm/database/database.dart';
+import 'package:location_alarm/shared/providers.dart';
 
 enum MenuOptions {
   Edit,
@@ -22,17 +22,23 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() async {
-      await AlarmsDatabase.instance.getAlarmsList();
+      await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    final state = ref.watch(alarmListNotifierProvider);
+    return Scaffold(
+      body: state.map(
+        initial: (_) => Container(),
+        loading: (_) => Container(),
+        noConnection: (_) => Container(),
+        noLocationService: (_) => Container(),
+        loaded: (loaded) => Container(),
+      ),
     );
   }
 }
