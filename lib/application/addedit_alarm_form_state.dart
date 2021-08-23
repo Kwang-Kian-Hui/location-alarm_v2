@@ -8,7 +8,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
   const AddEditAlarmFormState._();
   const factory AddEditAlarmFormState({
     required bool hasConnection,
-    // required bool showErrorMessage,
+    required bool showErrorMessage,
     required bool isSaving,
     required bool successful,
     required bool hasSqlFailure,
@@ -22,6 +22,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
 
   factory AddEditAlarmFormState.initial() => const AddEditAlarmFormState(
       hasConnection: true,
+      showErrorMessage: false,
       isSaving: false,
       successful: false,
       hasSqlFailure: false,

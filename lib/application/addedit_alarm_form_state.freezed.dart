@@ -18,6 +18,7 @@ class _$AddEditAlarmFormStateTearOff {
 
   _AddEditAlarmFormState call(
       {required bool hasConnection,
+      required bool showErrorMessage,
       required bool isSaving,
       required bool successful,
       required bool hasSqlFailure,
@@ -29,6 +30,7 @@ class _$AddEditAlarmFormStateTearOff {
       required CameraPosition cameraPosition}) {
     return _AddEditAlarmFormState(
       hasConnection: hasConnection,
+      showErrorMessage: showErrorMessage,
       isSaving: isSaving,
       successful: successful,
       hasSqlFailure: hasSqlFailure,
@@ -47,8 +49,8 @@ const $AddEditAlarmFormState = _$AddEditAlarmFormStateTearOff();
 
 /// @nodoc
 mixin _$AddEditAlarmFormState {
-  bool get hasConnection =>
-      throw _privateConstructorUsedError; // required bool showErrorMessage,
+  bool get hasConnection => throw _privateConstructorUsedError;
+  bool get showErrorMessage => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
   bool get successful => throw _privateConstructorUsedError;
   bool get hasSqlFailure => throw _privateConstructorUsedError;
@@ -71,6 +73,7 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       _$AddEditAlarmFormStateCopyWithImpl<$Res>;
   $Res call(
       {bool hasConnection,
+      bool showErrorMessage,
       bool isSaving,
       bool successful,
       bool hasSqlFailure,
@@ -94,6 +97,7 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hasConnection = freezed,
+    Object? showErrorMessage = freezed,
     Object? isSaving = freezed,
     Object? successful = freezed,
     Object? hasSqlFailure = freezed,
@@ -108,6 +112,10 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
       hasConnection: hasConnection == freezed
           ? _value.hasConnection
           : hasConnection // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showErrorMessage: showErrorMessage == freezed
+          ? _value.showErrorMessage
+          : showErrorMessage // ignore: cast_nullable_to_non_nullable
               as bool,
       isSaving: isSaving == freezed
           ? _value.isSaving
@@ -158,6 +166,7 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
   @override
   $Res call(
       {bool hasConnection,
+      bool showErrorMessage,
       bool isSaving,
       bool successful,
       bool hasSqlFailure,
@@ -183,6 +192,7 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hasConnection = freezed,
+    Object? showErrorMessage = freezed,
     Object? isSaving = freezed,
     Object? successful = freezed,
     Object? hasSqlFailure = freezed,
@@ -197,6 +207,10 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
       hasConnection: hasConnection == freezed
           ? _value.hasConnection
           : hasConnection // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showErrorMessage: showErrorMessage == freezed
+          ? _value.showErrorMessage
+          : showErrorMessage // ignore: cast_nullable_to_non_nullable
               as bool,
       isSaving: isSaving == freezed
           ? _value.isSaving
@@ -243,6 +257,7 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
 class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   const _$_AddEditAlarmFormState(
       {required this.hasConnection,
+      required this.showErrorMessage,
       required this.isSaving,
       required this.successful,
       required this.hasSqlFailure,
@@ -256,7 +271,9 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
   @override
   final bool hasConnection;
-  @override // required bool showErrorMessage,
+  @override
+  final bool showErrorMessage;
+  @override
   final bool isSaving;
   @override
   final bool successful;
@@ -277,7 +294,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(hasConnection: $hasConnection, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, cameraPosition: $cameraPosition)';
+    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, cameraPosition: $cameraPosition)';
   }
 
   @override
@@ -287,6 +304,9 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.hasConnection, hasConnection) ||
                 const DeepCollectionEquality()
                     .equals(other.hasConnection, hasConnection)) &&
+            (identical(other.showErrorMessage, showErrorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.showErrorMessage, showErrorMessage)) &&
             (identical(other.isSaving, isSaving) ||
                 const DeepCollectionEquality()
                     .equals(other.isSaving, isSaving)) &&
@@ -320,6 +340,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(hasConnection) ^
+      const DeepCollectionEquality().hash(showErrorMessage) ^
       const DeepCollectionEquality().hash(isSaving) ^
       const DeepCollectionEquality().hash(successful) ^
       const DeepCollectionEquality().hash(hasSqlFailure) ^
@@ -340,6 +361,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   const factory _AddEditAlarmFormState(
       {required bool hasConnection,
+      required bool showErrorMessage,
       required bool isSaving,
       required bool successful,
       required bool hasSqlFailure,
@@ -353,7 +375,9 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
 
   @override
   bool get hasConnection => throw _privateConstructorUsedError;
-  @override // required bool showErrorMessage,
+  @override
+  bool get showErrorMessage => throw _privateConstructorUsedError;
+  @override
   bool get isSaving => throw _privateConstructorUsedError;
   @override
   bool get successful => throw _privateConstructorUsedError;

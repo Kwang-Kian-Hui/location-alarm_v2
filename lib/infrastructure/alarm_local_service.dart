@@ -1,3 +1,3 @@
 class AlarmLocalService{
-  
+  AlarmLocalService();
 }

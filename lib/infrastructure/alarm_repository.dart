@@ -8,4 +8,6 @@ class AlarmRepository {
 
   AlarmRepository(
       this._alarmLocalService/*, this._internetConnectionChecker*/);
+
+  
 }

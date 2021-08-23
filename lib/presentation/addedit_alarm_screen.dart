@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:location_alarm/presentation/widgets/google_map_widgets.dart';
+
 class AddEditAlarmScreen extends ConsumerStatefulWidget {
   const AddEditAlarmScreen({Key? key}) : super(key: key);
   static const routeName = 'addedit-alarm-screen';
@@ -12,22 +14,38 @@ class AddEditAlarmScreen extends ConsumerStatefulWidget {
 }
 
 class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
+  late GoogleMapController _mapController;
+
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    // _positionStream =
+    //     Geolocator.getPositionStream().listen((Position position) {
+    //   _currentPosition = position;
+    // });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         height: height,
         width: width,
         child: Scaffold(
-          // key: homeScaffoldKey,
           body: Stack(
             children: <Widget>[
-              _googleMap(),
-              // _zoomInAndOutButton(width),
-              // _topBar(height, width),
-              // _camMoveToCurrentLocation(height, width),
+              googleMapBackground(_mapController),
+              zoomInAndOutButton(width, _mapController),
+              camMoveToCurrentLocationButton(height, width, _mapController, ref),
+              topFormBar(height, width, ref),
             ],
           ),
         ),
@@ -36,10 +54,4 @@ class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
   }
 }
 
-Widget _googleMap() {
-  return GoogleMap(
-    initialCameraPosition: CameraPosition(
-      target: LatLng(1.290270, 103.851959),
-    ),
-  );
-}
+
