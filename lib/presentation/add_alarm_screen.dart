@@ -11,6 +11,8 @@ class AddEditAlarmScreen extends ConsumerStatefulWidget {
 }
 
 class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
+  late GoogleMapController _mapController;
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -23,7 +25,7 @@ class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
           // key: homeScaffoldKey,
           body: Stack(
             children: <Widget>[
-              _googleMap(),
+              _googleMap(_mapController),
               // _zoomInAndOutButton(width),
               // _topBar(height, width),
               // _camMoveToCurrentLocation(height, width),
@@ -35,7 +37,7 @@ class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
   }
 }
 
-Widget _googleMap() {
+Widget _googleMap(GoogleMapController _mapController) {
   return GoogleMap(
     initialCameraPosition: CameraPosition(
       target: LatLng(1.290270, 103.851959),
@@ -47,14 +49,15 @@ Widget _googleMap() {
     // circles: circles,
     zoomGesturesEnabled: true,
     zoomControlsEnabled: false,
-    // onMapCreated: (GoogleMapController controller) {
-    //   mapController = controller;
-    //   _getCurrentLocation();
-    //   setState(() {});
-    // },
+    onMapCreated: (controller) {
+      _mapController = controller;
+
+    }, 
     // onTap: _onTapAction,
   );
 }
+
+
 
 // Widget _camMoveToCurrentLocation(height, width) {
 //     return SafeArea(
