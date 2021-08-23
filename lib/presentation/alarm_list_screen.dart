@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/database/database.dart';
+import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 
 enum MenuOptions {
   Edit,
@@ -30,9 +31,19 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
   }
 
   @override
+  void dispose() async {
+    super.dispose();
+    await AlarmsDatabase.instance.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      body: Container(),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+      )
     );
   }
 }
