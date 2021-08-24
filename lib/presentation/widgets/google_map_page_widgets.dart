@@ -3,25 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/shared/providers.dart';
 
-Widget googleMapBackground(GoogleMapController mapController) {
-  return GoogleMap(
-    initialCameraPosition: CameraPosition(
-      target: LatLng(1.290270, 103.851959),
-      zoom: 24,
-    ),
-    myLocationButtonEnabled: false,
-    mapType: MapType.normal,
-    // markers: markers,
-    // circles: circles,
-    zoomGesturesEnabled: true,
-    zoomControlsEnabled: false,
-    onMapCreated: (controller) {
-      mapController = controller;
-    },
-    // onTap: _onTapAction,
-  );
-}
-
 Widget zoomInAndOutButton(width, mapController) {
   return SafeArea(
     child: Padding(

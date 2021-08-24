@@ -22,6 +22,8 @@ class _$AddEditAlarmFormStateTearOff {
       required bool isSaving,
       required bool successful,
       required bool hasSqlFailure,
+      required bool hasMapLoaded,
+      required bool hasInitialPositionLoaded,
       required String? nameErrorMessage,
       required String alarmName,
       required int alarmRadius,
@@ -34,6 +36,8 @@ class _$AddEditAlarmFormStateTearOff {
       isSaving: isSaving,
       successful: successful,
       hasSqlFailure: hasSqlFailure,
+      hasMapLoaded: hasMapLoaded,
+      hasInitialPositionLoaded: hasInitialPositionLoaded,
       nameErrorMessage: nameErrorMessage,
       alarmName: alarmName,
       alarmRadius: alarmRadius,
@@ -54,6 +58,8 @@ mixin _$AddEditAlarmFormState {
   bool get isSaving => throw _privateConstructorUsedError;
   bool get successful => throw _privateConstructorUsedError;
   bool get hasSqlFailure => throw _privateConstructorUsedError;
+  bool get hasMapLoaded => throw _privateConstructorUsedError;
+  bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
   String? get nameErrorMessage => throw _privateConstructorUsedError;
   String get alarmName => throw _privateConstructorUsedError;
   int get alarmRadius => throw _privateConstructorUsedError;
@@ -77,6 +83,8 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       bool isSaving,
       bool successful,
       bool hasSqlFailure,
+      bool hasMapLoaded,
+      bool hasInitialPositionLoaded,
       String? nameErrorMessage,
       String alarmName,
       int alarmRadius,
@@ -101,6 +109,8 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? isSaving = freezed,
     Object? successful = freezed,
     Object? hasSqlFailure = freezed,
+    Object? hasMapLoaded = freezed,
+    Object? hasInitialPositionLoaded = freezed,
     Object? nameErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
@@ -128,6 +138,14 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
       hasSqlFailure: hasSqlFailure == freezed
           ? _value.hasSqlFailure
           : hasSqlFailure // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMapLoaded: hasMapLoaded == freezed
+          ? _value.hasMapLoaded
+          : hasMapLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasInitialPositionLoaded: hasInitialPositionLoaded == freezed
+          ? _value.hasInitialPositionLoaded
+          : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
       nameErrorMessage: nameErrorMessage == freezed
           ? _value.nameErrorMessage
@@ -170,6 +188,8 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
       bool isSaving,
       bool successful,
       bool hasSqlFailure,
+      bool hasMapLoaded,
+      bool hasInitialPositionLoaded,
       String? nameErrorMessage,
       String alarmName,
       int alarmRadius,
@@ -196,6 +216,8 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? isSaving = freezed,
     Object? successful = freezed,
     Object? hasSqlFailure = freezed,
+    Object? hasMapLoaded = freezed,
+    Object? hasInitialPositionLoaded = freezed,
     Object? nameErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
@@ -223,6 +245,14 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
       hasSqlFailure: hasSqlFailure == freezed
           ? _value.hasSqlFailure
           : hasSqlFailure // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMapLoaded: hasMapLoaded == freezed
+          ? _value.hasMapLoaded
+          : hasMapLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasInitialPositionLoaded: hasInitialPositionLoaded == freezed
+          ? _value.hasInitialPositionLoaded
+          : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
       nameErrorMessage: nameErrorMessage == freezed
           ? _value.nameErrorMessage
@@ -261,6 +291,8 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       required this.isSaving,
       required this.successful,
       required this.hasSqlFailure,
+      required this.hasMapLoaded,
+      required this.hasInitialPositionLoaded,
       required this.nameErrorMessage,
       required this.alarmName,
       required this.alarmRadius,
@@ -280,6 +312,10 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   @override
   final bool hasSqlFailure;
   @override
+  final bool hasMapLoaded;
+  @override
+  final bool hasInitialPositionLoaded;
+  @override
   final String? nameErrorMessage;
   @override
   final String alarmName;
@@ -294,7 +330,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, cameraPosition: $cameraPosition)';
+    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, cameraPosition: $cameraPosition)';
   }
 
   @override
@@ -316,6 +352,14 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.hasSqlFailure, hasSqlFailure) ||
                 const DeepCollectionEquality()
                     .equals(other.hasSqlFailure, hasSqlFailure)) &&
+            (identical(other.hasMapLoaded, hasMapLoaded) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasMapLoaded, hasMapLoaded)) &&
+            (identical(
+                    other.hasInitialPositionLoaded, hasInitialPositionLoaded) ||
+                const DeepCollectionEquality().equals(
+                    other.hasInitialPositionLoaded,
+                    hasInitialPositionLoaded)) &&
             (identical(other.nameErrorMessage, nameErrorMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.nameErrorMessage, nameErrorMessage)) &&
@@ -344,6 +388,8 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       const DeepCollectionEquality().hash(isSaving) ^
       const DeepCollectionEquality().hash(successful) ^
       const DeepCollectionEquality().hash(hasSqlFailure) ^
+      const DeepCollectionEquality().hash(hasMapLoaded) ^
+      const DeepCollectionEquality().hash(hasInitialPositionLoaded) ^
       const DeepCollectionEquality().hash(nameErrorMessage) ^
       const DeepCollectionEquality().hash(alarmName) ^
       const DeepCollectionEquality().hash(alarmRadius) ^
@@ -365,6 +411,8 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
       required bool isSaving,
       required bool successful,
       required bool hasSqlFailure,
+      required bool hasMapLoaded,
+      required bool hasInitialPositionLoaded,
       required String? nameErrorMessage,
       required String alarmName,
       required int alarmRadius,
@@ -383,6 +431,10 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   bool get successful => throw _privateConstructorUsedError;
   @override
   bool get hasSqlFailure => throw _privateConstructorUsedError;
+  @override
+  bool get hasMapLoaded => throw _privateConstructorUsedError;
+  @override
+  bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
   @override
   String? get nameErrorMessage => throw _privateConstructorUsedError;
   @override

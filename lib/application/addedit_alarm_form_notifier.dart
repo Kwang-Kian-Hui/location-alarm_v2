@@ -28,6 +28,14 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   }
 
+  void mapLoadedStateChanged(){
+    state = state.copyWith(hasMapLoaded: !state.hasMapLoaded);
+  }
+
+  void initialPositionStateChanged(){
+    state = state.copyWith(hasInitialPositionLoaded: !state.hasInitialPositionLoaded);
+  }
+
   Future<void> _validateInputs() async{
 
   }
