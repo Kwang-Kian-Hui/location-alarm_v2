@@ -96,7 +96,7 @@ Widget topFormBar(double height, double width, BuildContext context,
       child: Form(
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.grey[200],
             borderRadius: BorderRadius.all(
               Radius.circular(20),
             ),
