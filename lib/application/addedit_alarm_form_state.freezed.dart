@@ -24,12 +24,13 @@ class _$AddEditAlarmFormStateTearOff {
       required bool hasSqlFailure,
       required bool hasMapLoaded,
       required bool hasInitialPositionLoaded,
+      required GoogleMapController? mapController,
+      required Position currentPosition,
       required String? nameErrorMessage,
       required String alarmName,
       required int alarmRadius,
       required double destLat,
-      required double destLng,
-      required CameraPosition cameraPosition}) {
+      required double destLng}) {
     return _AddEditAlarmFormState(
       hasConnection: hasConnection,
       showErrorMessage: showErrorMessage,
@@ -38,12 +39,13 @@ class _$AddEditAlarmFormStateTearOff {
       hasSqlFailure: hasSqlFailure,
       hasMapLoaded: hasMapLoaded,
       hasInitialPositionLoaded: hasInitialPositionLoaded,
+      mapController: mapController,
+      currentPosition: currentPosition,
       nameErrorMessage: nameErrorMessage,
       alarmName: alarmName,
       alarmRadius: alarmRadius,
       destLat: destLat,
       destLng: destLng,
-      cameraPosition: cameraPosition,
     );
   }
 }
@@ -60,12 +62,13 @@ mixin _$AddEditAlarmFormState {
   bool get hasSqlFailure => throw _privateConstructorUsedError;
   bool get hasMapLoaded => throw _privateConstructorUsedError;
   bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
+  GoogleMapController? get mapController => throw _privateConstructorUsedError;
+  Position get currentPosition => throw _privateConstructorUsedError;
   String? get nameErrorMessage => throw _privateConstructorUsedError;
   String get alarmName => throw _privateConstructorUsedError;
   int get alarmRadius => throw _privateConstructorUsedError;
   double get destLat => throw _privateConstructorUsedError;
   double get destLng => throw _privateConstructorUsedError;
-  CameraPosition get cameraPosition => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddEditAlarmFormStateCopyWith<AddEditAlarmFormState> get copyWith =>
@@ -85,12 +88,13 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       bool hasSqlFailure,
       bool hasMapLoaded,
       bool hasInitialPositionLoaded,
+      GoogleMapController? mapController,
+      Position currentPosition,
       String? nameErrorMessage,
       String alarmName,
       int alarmRadius,
       double destLat,
-      double destLng,
-      CameraPosition cameraPosition});
+      double destLng});
 }
 
 /// @nodoc
@@ -111,12 +115,13 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? hasSqlFailure = freezed,
     Object? hasMapLoaded = freezed,
     Object? hasInitialPositionLoaded = freezed,
+    Object? mapController = freezed,
+    Object? currentPosition = freezed,
     Object? nameErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
     Object? destLng = freezed,
-    Object? cameraPosition = freezed,
   }) {
     return _then(_value.copyWith(
       hasConnection: hasConnection == freezed
@@ -147,6 +152,14 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.hasInitialPositionLoaded
           : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
+      mapController: mapController == freezed
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as GoogleMapController?,
+      currentPosition: currentPosition == freezed
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position,
       nameErrorMessage: nameErrorMessage == freezed
           ? _value.nameErrorMessage
           : nameErrorMessage // ignore: cast_nullable_to_non_nullable
@@ -167,10 +180,6 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.destLng
           : destLng // ignore: cast_nullable_to_non_nullable
               as double,
-      cameraPosition: cameraPosition == freezed
-          ? _value.cameraPosition
-          : cameraPosition // ignore: cast_nullable_to_non_nullable
-              as CameraPosition,
     ));
   }
 }
@@ -190,12 +199,13 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
       bool hasSqlFailure,
       bool hasMapLoaded,
       bool hasInitialPositionLoaded,
+      GoogleMapController? mapController,
+      Position currentPosition,
       String? nameErrorMessage,
       String alarmName,
       int alarmRadius,
       double destLat,
-      double destLng,
-      CameraPosition cameraPosition});
+      double destLng});
 }
 
 /// @nodoc
@@ -218,12 +228,13 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? hasSqlFailure = freezed,
     Object? hasMapLoaded = freezed,
     Object? hasInitialPositionLoaded = freezed,
+    Object? mapController = freezed,
+    Object? currentPosition = freezed,
     Object? nameErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
     Object? destLng = freezed,
-    Object? cameraPosition = freezed,
   }) {
     return _then(_AddEditAlarmFormState(
       hasConnection: hasConnection == freezed
@@ -254,6 +265,14 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.hasInitialPositionLoaded
           : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
+      mapController: mapController == freezed
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as GoogleMapController?,
+      currentPosition: currentPosition == freezed
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Position,
       nameErrorMessage: nameErrorMessage == freezed
           ? _value.nameErrorMessage
           : nameErrorMessage // ignore: cast_nullable_to_non_nullable
@@ -274,10 +293,6 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.destLng
           : destLng // ignore: cast_nullable_to_non_nullable
               as double,
-      cameraPosition: cameraPosition == freezed
-          ? _value.cameraPosition
-          : cameraPosition // ignore: cast_nullable_to_non_nullable
-              as CameraPosition,
     ));
   }
 }
@@ -293,12 +308,13 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       required this.hasSqlFailure,
       required this.hasMapLoaded,
       required this.hasInitialPositionLoaded,
+      required this.mapController,
+      required this.currentPosition,
       required this.nameErrorMessage,
       required this.alarmName,
       required this.alarmRadius,
       required this.destLat,
-      required this.destLng,
-      required this.cameraPosition})
+      required this.destLng})
       : super._();
 
   @override
@@ -316,6 +332,10 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   @override
   final bool hasInitialPositionLoaded;
   @override
+  final GoogleMapController? mapController;
+  @override
+  final Position currentPosition;
+  @override
   final String? nameErrorMessage;
   @override
   final String alarmName;
@@ -325,12 +345,10 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   final double destLat;
   @override
   final double destLng;
-  @override
-  final CameraPosition cameraPosition;
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, cameraPosition: $cameraPosition)';
+    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng)';
   }
 
   @override
@@ -360,6 +378,12 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
                 const DeepCollectionEquality().equals(
                     other.hasInitialPositionLoaded,
                     hasInitialPositionLoaded)) &&
+            (identical(other.mapController, mapController) ||
+                const DeepCollectionEquality()
+                    .equals(other.mapController, mapController)) &&
+            (identical(other.currentPosition, currentPosition) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentPosition, currentPosition)) &&
             (identical(other.nameErrorMessage, nameErrorMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.nameErrorMessage, nameErrorMessage)) &&
@@ -373,11 +397,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
                 const DeepCollectionEquality()
                     .equals(other.destLat, destLat)) &&
             (identical(other.destLng, destLng) ||
-                const DeepCollectionEquality()
-                    .equals(other.destLng, destLng)) &&
-            (identical(other.cameraPosition, cameraPosition) ||
-                const DeepCollectionEquality()
-                    .equals(other.cameraPosition, cameraPosition)));
+                const DeepCollectionEquality().equals(other.destLng, destLng)));
   }
 
   @override
@@ -390,12 +410,13 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       const DeepCollectionEquality().hash(hasSqlFailure) ^
       const DeepCollectionEquality().hash(hasMapLoaded) ^
       const DeepCollectionEquality().hash(hasInitialPositionLoaded) ^
+      const DeepCollectionEquality().hash(mapController) ^
+      const DeepCollectionEquality().hash(currentPosition) ^
       const DeepCollectionEquality().hash(nameErrorMessage) ^
       const DeepCollectionEquality().hash(alarmName) ^
       const DeepCollectionEquality().hash(alarmRadius) ^
       const DeepCollectionEquality().hash(destLat) ^
-      const DeepCollectionEquality().hash(destLng) ^
-      const DeepCollectionEquality().hash(cameraPosition);
+      const DeepCollectionEquality().hash(destLng);
 
   @JsonKey(ignore: true)
   @override
@@ -413,12 +434,13 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
       required bool hasSqlFailure,
       required bool hasMapLoaded,
       required bool hasInitialPositionLoaded,
+      required GoogleMapController? mapController,
+      required Position currentPosition,
       required String? nameErrorMessage,
       required String alarmName,
       required int alarmRadius,
       required double destLat,
-      required double destLng,
-      required CameraPosition cameraPosition}) = _$_AddEditAlarmFormState;
+      required double destLng}) = _$_AddEditAlarmFormState;
   const _AddEditAlarmFormState._() : super._();
 
   @override
@@ -436,6 +458,10 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   @override
   bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
   @override
+  GoogleMapController? get mapController => throw _privateConstructorUsedError;
+  @override
+  Position get currentPosition => throw _privateConstructorUsedError;
+  @override
   String? get nameErrorMessage => throw _privateConstructorUsedError;
   @override
   String get alarmName => throw _privateConstructorUsedError;
@@ -445,8 +471,6 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   double get destLat => throw _privateConstructorUsedError;
   @override
   double get destLng => throw _privateConstructorUsedError;
-  @override
-  CameraPosition get cameraPosition => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AddEditAlarmFormStateCopyWith<_AddEditAlarmFormState> get copyWith =>

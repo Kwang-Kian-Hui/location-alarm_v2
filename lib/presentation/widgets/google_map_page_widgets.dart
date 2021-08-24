@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/shared/providers.dart';
 
@@ -55,45 +56,42 @@ Widget zoomInAndOutButton(width, mapController) {
 
 Widget camMoveToCurrentLocationButton(double height, double width,
     GoogleMapController mapController, WidgetRef ref) {
-  return SafeArea(
-    child: Padding(
-      padding: EdgeInsets.only(
-        left: width * 12 / 15,
-        top: height * 13 / 15,
-      ),
-      child: ClipOval(
-        child: Container(
-          width: 60,
-          height: 60,
-          color: Colors.grey[300], // button color
-          child: IconButton(
-            icon: Icon(Icons.my_location),
-            iconSize: 30,
-            onPressed: () {
-              final currentPositionLat =
-                  ref.read(addEditAlarmFormNotifierProvider).destLat;
-              final currentPositionLng =
-                  ref.read(addEditAlarmFormNotifierProvider).destLng;
-              mapController.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: LatLng(
-                      currentPositionLat,
-                      currentPositionLng,
-                    ),
-                    zoom: 18.0,
+  return Padding(
+    padding: EdgeInsets.only(
+      left: width * 12 / 15,
+      top: height * 13 / 15,
+    ),
+    child: ClipOval(
+      child: Container(
+        width: 60,
+        height: 60,
+        color: Colors.grey[300], // button color
+        child: IconButton(
+          icon: Icon(Icons.my_location),
+          iconSize: 30,
+          onPressed: () {
+            final currentPosition = ref.read(addEditAlarmFormNotifierProvider).currentPosition;
+            mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(
+                    currentPosition.latitude,
+                    currentPosition.longitude,
                   ),
+                  zoom: 18.0,
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     ),
   );
 }
 
-Widget topFormBar(double height, double width, WidgetRef ref) {
+Widget topFormBar(double height, double width,
+    GoogleMapController mapController, WidgetRef ref) {
+  print('top form bar');
   return SafeArea(
     child: Align(
       alignment: Alignment.topCenter,
@@ -112,14 +110,15 @@ Widget topFormBar(double height, double width, WidgetRef ref) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                // Text("Destination"),
-                // SizedBox(height: 10),
+                Text("Destination"),
+                SizedBox(height: 10),
                 // style text maybe?
                 Row(
                   children: [
                     // searchAddressBar(height, width, context),
                     SizedBox(width: width * 0.01),
-                    // centerCurrentAndDestLocation(height, width),
+                    centerCurrentAndDestLocation(
+                        height, width, mapController, ref),
                   ],
                 ),
                 SizedBox(height: 10),
@@ -137,6 +136,62 @@ Widget topFormBar(double height, double width, WidgetRef ref) {
           ),
         ),
       ),
+    ),
+  );
+}
+
+Widget centerCurrentAndDestLocation(
+    height, width, GoogleMapController mapController, WidgetRef ref) {
+  final currentPosition =
+      ref.read(addEditAlarmFormNotifierProvider).currentPosition;
+  final destLat = ref.read(addEditAlarmFormNotifierProvider).destLat;
+  final destLng = ref.read(addEditAlarmFormNotifierProvider).destLng;
+  return Container(
+    width: width * 0.12,
+    height: height * 0.077,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      border: Border.all(
+        width: 2,
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+    child: IconButton(
+      icon: Icon(
+        Icons.location_on,
+      ),
+      onPressed: () {
+        double _southWestLat;
+        double _southWestLong;
+        double _northEastLat;
+        double _northEastLong;
+
+        if (currentPosition.latitude <= destLat) {
+          _southWestLat = currentPosition.latitude;
+          _northEastLat = destLat;
+        } else {
+          _northEastLat = currentPosition.latitude;
+          _southWestLat = destLat;
+        }
+
+        if (currentPosition.longitude <= destLng) {
+          _southWestLong = currentPosition.longitude;
+          _northEastLong = destLng;
+        } else {
+          _northEastLong = currentPosition.longitude;
+          _southWestLong = destLng;
+        }
+
+        mapController.animateCamera(
+          CameraUpdate.newLatLngBounds(
+            LatLngBounds(
+              northeast: LatLng(_northEastLat, _northEastLong),
+              southwest: LatLng(_southWestLat, _southWestLong),
+            ),
+            100,
+          ),
+        );
+      },
     ),
   );
 }
