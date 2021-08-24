@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
 import 'package:location_alarm/presentation/addedit_alarm_form.dart';
 
-import 'package:location_alarm/presentation/widgets/google_map_page_widgets.dart';
+import 'package:location_alarm/presentation/widgets/addedit_alarm_form_widgets.dart';
 import 'package:location_alarm/presentation/widgets/progress_indicator_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 

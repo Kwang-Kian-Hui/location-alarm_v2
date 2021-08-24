@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,6 +24,17 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   void alarmRadiusChanged(int radius) {
     state = state.copyWith(alarmRadius: radius);
+    if (state.circles.isNotEmpty) {
+      Circle newCircle = Circle(
+        circleId: CircleId('${LatLng(state.destLat, state.destLng)}'),
+        fillColor: Color.fromRGBO(70, 180, 255, 0.5),
+        strokeWidth: 0,
+        center: LatLng(state.destLat, state.destLng),
+        radius: radius.toDouble(),
+      );
+      state.circles.clear();
+      state.circles.add(newCircle);
+    }
   }
 
   void alarmDestLatChanged() {}
@@ -52,9 +65,63 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
       if (mounted) {
         print('update pos');
         state = state.copyWith(currentPosition: position);
-        if(!state.hasInitialPositionLoaded) initialPositionStateChanged();
+        if (!state.hasInitialPositionLoaded) initialPositionStateChanged();
       }
     });
+  }
+
+  void addOrUpdateNewMarker(LatLng newLatLng) async {
+    print('placemarkfromcoord');
+    List<Placemark> destinationPlacemark =
+        await placemarkFromCoordinates(newLatLng.latitude, newLatLng.longitude);
+    // _destinationLatLng = LatLng(newLatLng.latitude, newLatLng.longitude);
+    state = state.copyWith(destLat: newLatLng.latitude);
+    state = state.copyWith(destLng: newLatLng.longitude);
+    print('replaced latlng');
+    // print("destination latlng: $_destinationLatLng");
+    print('address writing');
+    final destinationAddress =
+        "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
+    state = state.copyWith(destAddress: destinationAddress);
+
+    print('make new marker');
+    Marker newMarker = Marker(
+      markerId: MarkerId('${LatLng(state.destLat, state.destLng)}'),
+      position: LatLng(
+        state.destLat,
+        state.destLng,
+      ),
+      draggable: true,
+      // infoWindow: InfoWindow(
+      //   title: 'Destination',
+      //   snippet: destinationAddressController.text,
+      // ),
+      icon: BitmapDescriptor.defaultMarker,
+      onDragEnd: (newLatLng) async {
+        addOrUpdateNewMarker(newLatLng);
+      },
+    );
+
+    print('make new circle');
+    Circle newCircle = Circle(
+      circleId: CircleId('${LatLng(state.destLat, state.destLng)}'),
+      fillColor: Color.fromRGBO(70, 180, 255, 0.5),
+      strokeWidth: 0,
+      center: LatLng(state.destLat, state.destLng),
+      radius: state.alarmRadius.toDouble(),
+    );
+
+    if (state.markers.isEmpty) {
+      state.markers.add(newMarker);
+      state.circles.add(newCircle);
+      print('added new marker and circle');
+    } else {
+      state.markers.clear();
+      state.markers.add(newMarker);
+      state.circles.clear();
+      state.circles.add(newCircle);
+      print('cleared and added new marker and circle');
+    }
   }
 
   Future<void> _validateInputs() async {}

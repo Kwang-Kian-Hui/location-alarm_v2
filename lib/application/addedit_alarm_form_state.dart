@@ -18,12 +18,15 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
     required bool hasMapLoaded,
     required bool hasInitialPositionLoaded,
     required GoogleMapController? mapController,
+    required Set<Marker> markers,
+    required Set<Circle> circles,
     required Position currentPosition,
     required String? nameErrorMessage,
     required String alarmName,
     required int alarmRadius,
     required double destLat,
     required double destLng,
+    required String? destAddress,
   }) = _AddEditAlarmFormState;
 
   factory AddEditAlarmFormState.initial() => AddEditAlarmFormState(
@@ -34,6 +37,8 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
         hasSqlFailure: false,
         hasMapLoaded: false,
         hasInitialPositionLoaded: false,
+        markers: <Marker>{},
+        circles: <Circle>{},
         currentPosition: Position(
             longitude: 103.851959,
             latitude: 1.290270,
@@ -49,5 +54,6 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
         alarmRadius: 100,
         destLat: 0.0,
         destLng: 0.0,
+        destAddress: null,
       );
 }

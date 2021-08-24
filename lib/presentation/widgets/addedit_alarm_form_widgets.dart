@@ -4,63 +4,60 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/shared/providers.dart';
 
-Widget zoomInAndOutButton(width, mapController) {
-  return SafeArea(
-    child: Padding(
-      padding: EdgeInsets.only(left: width / 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ClipOval(
-            child: Material(
-              color: Colors.grey[300],
-              child: InkWell(
-                splashColor: Colors.black,
-                child: SizedBox(
-                  width: width / 10,
-                  height: width / 10,
-                  child: Icon(Icons.add),
-                ),
-                onTap: () {
-                  mapController.animateCamera(
-                    CameraUpdate.zoomIn(),
-                  );
-                },
+Widget zoomInAndOutButton(height, mapController) {
+  return Positioned(
+    left: 8,
+    bottom: height / 3,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ClipOval(
+          child: Material(
+            color: Colors.grey[300],
+            child: InkWell(
+              splashColor: Colors.black,
+              child: SizedBox(
+                width: height / 10,
+                height: height / 10,
+                child: Icon(Icons.add),
               ),
+              onTap: () {
+                mapController.animateCamera(
+                  CameraUpdate.zoomIn(),
+                );
+              },
             ),
           ),
-          SizedBox(height: width / 30),
-          ClipOval(
-            child: Material(
-              color: Colors.grey[300],
-              child: InkWell(
-                splashColor: Colors.black,
-                child: SizedBox(
-                  width: width / 10,
-                  height: width / 10,
-                  child: Icon(Icons.remove),
-                ),
-                onTap: () {
-                  mapController.animateCamera(
-                    CameraUpdate.zoomOut(),
-                  );
-                },
+        ),
+        SizedBox(height: 10),
+        ClipOval(
+          child: Material(
+            color: Colors.grey[300],
+            child: InkWell(
+              splashColor: Colors.black,
+              child: SizedBox(
+                width: height / 10,
+                height: height / 10,
+                child: Icon(Icons.remove),
               ),
+              onTap: () {
+                mapController.animateCamera(
+                  CameraUpdate.zoomOut(),
+                );
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }
 
 Widget camMoveToCurrentLocationButton(double height, double width,
     GoogleMapController mapController, WidgetRef ref) {
-  return Padding(
-    padding: EdgeInsets.only(
-      left: width * 12 / 15,
-      top: height * 13 / 15,
-    ),
+  return Positioned(
+    bottom: 10,
+    right: 10,
     child: ClipOval(
       child: Container(
         width: 60,
@@ -70,7 +67,8 @@ Widget camMoveToCurrentLocationButton(double height, double width,
           icon: Icon(Icons.my_location),
           iconSize: 30,
           onPressed: () {
-            final currentPosition = ref.read(addEditAlarmFormNotifierProvider).currentPosition;
+            final currentPosition =
+                ref.read(addEditAlarmFormNotifierProvider).currentPosition;
             mapController.animateCamera(
               CameraUpdate.newCameraPosition(
                 CameraPosition(
@@ -89,14 +87,13 @@ Widget camMoveToCurrentLocationButton(double height, double width,
   );
 }
 
-Widget topFormBar(double height, double width,
+Widget topFormBar(double height, double width, BuildContext context,
     GoogleMapController mapController, WidgetRef ref) {
   print('top form bar');
-  return SafeArea(
+  return Positioned.fill(
     child: Align(
       alignment: Alignment.topCenter,
-      child: Padding(
-        padding: EdgeInsets.only(top: width / 30),
+      child: Form(
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -128,7 +125,7 @@ Widget topFormBar(double height, double width,
                     SizedBox(width: width * 0.01),
                     alarmRadiusDropdownMenu(height, width, ref),
                     SizedBox(width: width * 0.01),
-                    submitFormButton(height, width, ref),
+                    submitFormButton(height, width, context, ref),
                   ],
                 ),
               ],
@@ -202,22 +199,21 @@ Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
     height: height * 0.068,
     child: TextFormField(
       initialValue: ref.read(addEditAlarmFormNotifierProvider).alarmName,
-      //     errorText: ref.watch(addEditAlarmFormNotifierProvider
-      //     .select((state) => state.showErrorMessage))
-      // ? ref.watch(addEditAlarmFormNotifierProvider
-      //     .select((state) => state.usualPriceErrorMessage))
-      // : null,
       onChanged: (_) =>
           ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
       decoration: InputDecoration(
-        //labelText: "Search for Address",
         labelText: "Enter alarm name",
-        // focusedBorder: OutlineInputBorder(
-        //   borderSide: BorderSide(
-        //     color: Colors.blue,
-        //     width: 2,
-        //   ),
-        // ),
+        errorText: ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.showErrorMessage))
+            ? ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.nameErrorMessage))
+            : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black,
@@ -253,18 +249,6 @@ Widget alarmRadiusDropdownMenu(double height, double width, WidgetRef ref) {
         ref
             .read(addEditAlarmFormNotifierProvider.notifier)
             .alarmRadiusChanged(newValue!);
-        //   if (circles.isNotEmpty) {
-        //     Circle newCircle = Circle(
-        //       circleId: CircleId('$_destinationLatLng'),
-        //       fillColor: Color.fromRGBO(70, 180, 255, 0.5),
-        //       strokeWidth: 0,
-        //       center: _destinationLatLng,
-        //       radius: radiusValue.toDouble(),
-        //     );
-        //     circles.clear();
-        //     circles.add(newCircle);
-        //   }
-        // });
       },
       items: <int>[100, 300, 500, 1000, 2000]
           .map<DropdownMenuItem<int>>((int value) {
@@ -277,7 +261,8 @@ Widget alarmRadiusDropdownMenu(double height, double width, WidgetRef ref) {
   );
 }
 
-Widget submitFormButton(double height, double width, WidgetRef ref) {
+Widget submitFormButton(
+    double height, double width, BuildContext context, WidgetRef ref) {
   return Container(
     width: width * 0.12,
     height: height * 0.068,
@@ -288,34 +273,15 @@ Widget submitFormButton(double height, double width, WidgetRef ref) {
       ),
       borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
-    // child: IconButton(
-    //   icon: Icon(
-    //     Icons.done,
-    //   ),
-    // onPressed: () async {
-    //   // add new alarm
-    //   if (destinationAddressController.text == "") {
-    //     await showDialog<Null>(
-    //       //wait for user to press button to close error msg
-    //       context: context,
-    //       builder: (ctx) => AlertDialog(
-    //         title: Text("Please mark a destination"),
-    //         content: Text(
-    //           "Tap a location on the map to set a destination.", //error.toString(),
-    //         ),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             child: Text("Okay"),
-    //             onPressed: () {
-    //               Navigator.of(ctx).pop();
-    //             },
-    //           ),
-    //         ],
-    //       ),
-    //     );
-    //   }
-    //   _addEditAlarm();
-    // },
-    // ),
+    child: IconButton(
+      icon: Icon(
+        Icons.done,
+      ),
+      onPressed: () {
+        // add new alarm
+        FocusScope.of(context).unfocus();
+        ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
+      },
+    ),
   );
 }

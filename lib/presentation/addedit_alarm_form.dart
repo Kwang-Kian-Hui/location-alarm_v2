@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location_alarm/presentation/widgets/google_map_page_widgets.dart';
+import 'package:location_alarm/presentation/widgets/addedit_alarm_form_widgets.dart';
 import 'package:location_alarm/shared/providers.dart';
 
 class AddEditAlarmForm extends ConsumerWidget {
@@ -15,6 +15,15 @@ class AddEditAlarmForm extends ConsumerWidget {
           .read(addEditAlarmFormNotifierProvider.notifier)
           .loadMapController(controller);
     }
+
+    void _onTapAction(LatLng latlng) async {
+    try {
+      print('ontapaction');
+      ref.read(addEditAlarmFormNotifierProvider.notifier).addOrUpdateNewMarker(latlng);
+    } catch (e) {
+      print(e);
+    }
+  }
 
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -30,9 +39,6 @@ class AddEditAlarmForm extends ConsumerWidget {
         clipBehavior: Clip.hardEdge,
         fit: StackFit.expand,
         children: <Widget>[
-          // ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded ? topFormBar(height, width, mapController!, ref) : Center(),
-          // ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded ? zoomInAndOutButton(width, mapController!) : const Center(),
-
           ref.read(addEditAlarmFormNotifierProvider).hasInitialPositionLoaded
               ? Positioned(
                   child: GoogleMap(
@@ -51,22 +57,46 @@ class AddEditAlarmForm extends ConsumerWidget {
                     ),
                     myLocationButtonEnabled: false,
                     mapType: MapType.normal,
-                    // markers: markers,
-                    // circles: circles,
+                    markers: ref.watch(addEditAlarmFormNotifierProvider).markers,
+                    circles: ref.watch(addEditAlarmFormNotifierProvider).circles,
                     zoomGesturesEnabled: true,
                     zoomControlsEnabled: false,
-                    // onTap: _onTapAction,
+                    onTap: _onTapAction,
                   ),
                 )
               : Center(child: CircularProgressIndicator()),
-          Positioned(
-            right: 15,
-            bottom: 15,
-            child: ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+          // Positioned(
+          //   right: 15,
+          //   bottom: 15,
+          //   child: ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+          //       ? camMoveToCurrentLocationButton(
+          //           height, width, mapController!, ref)
+          //       : Container(),
+          // ),
+          // Positioned(
+          //   child: ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+          //       ? zoomInAndOutButton(width, mapController!)
+          //       : Container(),
+          // ),
+          // Positioned.fill(
+          //   top: 5,
+          //   child: Align(
+          //     alignment: Alignment.topCenter,
+          //     child: ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+          //         ? topFormBar(height, width, mapController!, ref)
+          //         : Container(),
+          //   ),
+          // ),
+          ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
                 ? camMoveToCurrentLocationButton(
                     height, width, mapController!, ref)
                 : Container(),
-          ),
+          ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+                ? zoomInAndOutButton(width, mapController!)
+                : Container(),
+          ref.watch(addEditAlarmFormNotifierProvider).hasMapLoaded
+                  ? topFormBar(height, width, context, mapController!, ref)
+                  : Container(),
         ],
       ),
     );
