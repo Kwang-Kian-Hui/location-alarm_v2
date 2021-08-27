@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,7 +25,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
     required int alarmRadius,
     required double destLat,
     required double destLng,
-    required String? destAddress,
+    required TextEditingController destAddressController,
   }) = _AddEditAlarmFormState;
 
   factory AddEditAlarmFormState.initial() => AddEditAlarmFormState(
@@ -54,6 +53,6 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
         alarmRadius: 100,
         destLat: 0.0,
         destLng: 0.0,
-        destAddress: null,
+        destAddressController: TextEditingController(),
       );
 }

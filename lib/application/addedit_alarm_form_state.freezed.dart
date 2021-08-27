@@ -33,7 +33,7 @@ class _$AddEditAlarmFormStateTearOff {
       required int alarmRadius,
       required double destLat,
       required double destLng,
-      required String? destAddress}) {
+      required TextEditingController destAddressController}) {
     return _AddEditAlarmFormState(
       hasConnection: hasConnection,
       showErrorMessage: showErrorMessage,
@@ -51,7 +51,7 @@ class _$AddEditAlarmFormStateTearOff {
       alarmRadius: alarmRadius,
       destLat: destLat,
       destLng: destLng,
-      destAddress: destAddress,
+      destAddressController: destAddressController,
     );
   }
 }
@@ -77,7 +77,8 @@ mixin _$AddEditAlarmFormState {
   int get alarmRadius => throw _privateConstructorUsedError;
   double get destLat => throw _privateConstructorUsedError;
   double get destLng => throw _privateConstructorUsedError;
-  String? get destAddress => throw _privateConstructorUsedError;
+  TextEditingController get destAddressController =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddEditAlarmFormStateCopyWith<AddEditAlarmFormState> get copyWith =>
@@ -106,7 +107,7 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       int alarmRadius,
       double destLat,
       double destLng,
-      String? destAddress});
+      TextEditingController destAddressController});
 }
 
 /// @nodoc
@@ -136,7 +137,7 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
     Object? destLng = freezed,
-    Object? destAddress = freezed,
+    Object? destAddressController = freezed,
   }) {
     return _then(_value.copyWith(
       hasConnection: hasConnection == freezed
@@ -203,10 +204,10 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.destLng
           : destLng // ignore: cast_nullable_to_non_nullable
               as double,
-      destAddress: destAddress == freezed
-          ? _value.destAddress
-          : destAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
+      destAddressController: destAddressController == freezed
+          ? _value.destAddressController
+          : destAddressController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -235,7 +236,7 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
       int alarmRadius,
       double destLat,
       double destLng,
-      String? destAddress});
+      TextEditingController destAddressController});
 }
 
 /// @nodoc
@@ -267,7 +268,7 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
     Object? destLng = freezed,
-    Object? destAddress = freezed,
+    Object? destAddressController = freezed,
   }) {
     return _then(_AddEditAlarmFormState(
       hasConnection: hasConnection == freezed
@@ -334,10 +335,10 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.destLng
           : destLng // ignore: cast_nullable_to_non_nullable
               as double,
-      destAddress: destAddress == freezed
-          ? _value.destAddress
-          : destAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
+      destAddressController: destAddressController == freezed
+          ? _value.destAddressController
+          : destAddressController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -362,7 +363,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       required this.alarmRadius,
       required this.destLat,
       required this.destLng,
-      required this.destAddress})
+      required this.destAddressController})
       : super._();
 
   @override
@@ -398,11 +399,11 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   @override
   final double destLng;
   @override
-  final String? destAddress;
+  final TextEditingController destAddressController;
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddress: $destAddress)';
+    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddressController: $destAddressController)';
   }
 
   @override
@@ -459,9 +460,9 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.destLng, destLng) ||
                 const DeepCollectionEquality()
                     .equals(other.destLng, destLng)) &&
-            (identical(other.destAddress, destAddress) ||
+            (identical(other.destAddressController, destAddressController) ||
                 const DeepCollectionEquality()
-                    .equals(other.destAddress, destAddress)));
+                    .equals(other.destAddressController, destAddressController)));
   }
 
   @override
@@ -483,7 +484,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       const DeepCollectionEquality().hash(alarmRadius) ^
       const DeepCollectionEquality().hash(destLat) ^
       const DeepCollectionEquality().hash(destLng) ^
-      const DeepCollectionEquality().hash(destAddress);
+      const DeepCollectionEquality().hash(destAddressController);
 
   @JsonKey(ignore: true)
   @override
@@ -494,23 +495,24 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
 abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   const factory _AddEditAlarmFormState(
-      {required bool hasConnection,
-      required bool showErrorMessage,
-      required bool isSaving,
-      required bool successful,
-      required bool hasSqlFailure,
-      required bool hasMapLoaded,
-      required bool hasInitialPositionLoaded,
-      required GoogleMapController? mapController,
-      required Set<Marker> markers,
-      required Set<Circle> circles,
-      required Position currentPosition,
-      required String? nameErrorMessage,
-      required String alarmName,
-      required int alarmRadius,
-      required double destLat,
-      required double destLng,
-      required String? destAddress}) = _$_AddEditAlarmFormState;
+          {required bool hasConnection,
+          required bool showErrorMessage,
+          required bool isSaving,
+          required bool successful,
+          required bool hasSqlFailure,
+          required bool hasMapLoaded,
+          required bool hasInitialPositionLoaded,
+          required GoogleMapController? mapController,
+          required Set<Marker> markers,
+          required Set<Circle> circles,
+          required Position currentPosition,
+          required String? nameErrorMessage,
+          required String alarmName,
+          required int alarmRadius,
+          required double destLat,
+          required double destLng,
+          required TextEditingController destAddressController}) =
+      _$_AddEditAlarmFormState;
   const _AddEditAlarmFormState._() : super._();
 
   @override
@@ -546,7 +548,8 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   @override
   double get destLng => throw _privateConstructorUsedError;
   @override
-  String? get destAddress => throw _privateConstructorUsedError;
+  TextEditingController get destAddressController =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AddEditAlarmFormStateCopyWith<_AddEditAlarmFormState> get copyWith =>

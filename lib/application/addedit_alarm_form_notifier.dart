@@ -82,7 +82,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     print('address writing');
     final destinationAddress =
         "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
-    state = state.copyWith(destAddress: destinationAddress);
+    state.destAddressController.text = destinationAddress;
 
     print('make new marker');
     Marker newMarker = Marker(
@@ -131,6 +131,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   @override
   void dispose() {
     _positionStreamSubscription?.cancel();
+    state.destAddressController.dispose();
     super.dispose();
   }
 }
