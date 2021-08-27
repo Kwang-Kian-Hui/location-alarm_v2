@@ -112,7 +112,7 @@ Widget topFormBar(double height, double width, BuildContext context,
                 // style text maybe?
                 Row(
                   children: [
-                    // searchAddressBar(height, width, context),
+                    searchAddressBar(height, width, context, ref),
                     SizedBox(width: width * 0.01),
                     centerCurrentAndDestLocation(
                         height, width, mapController, ref),
@@ -136,6 +136,71 @@ Widget topFormBar(double height, double width, BuildContext context,
     ),
   );
 }
+
+Widget searchAddressBar(double height, double width, BuildContext context, WidgetRef ref) {
+    return Container(
+      width: width * 0.7,
+      child: TextFormField(
+      initialValue: ref.read(addEditAlarmFormNotifierProvider).destAddress,
+      onChanged: (_) =>
+          ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
+      decoration: InputDecoration(
+        labelText: "Enter alarm name",
+        errorText: ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.showErrorMessage))
+            ? ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.nameErrorMessage))
+            : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: 2,
+          ),
+        ),
+      ),
+    ),
+      // child: TextField(
+      //   enabled: false,
+        
+      //   decoration: InputDecoration(
+      //     labelText: "Tap on map to set destination",
+      //     focusedBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(
+      //         color: Colors.black,
+      //         width: 2,
+      //       ),
+      //     ),
+      //     disabledBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(
+      //         color: Colors.black,
+      //         width: 2,
+      //       ),
+      //     ),
+      //   ),
+      //   // onTap: () async {
+      //   //   final sessionToken = Uuid().v4();
+      //   //   final Suggestion result = await showSearch(
+      //   //     context: context,
+      //   //     delegate: SearchAddress(sessionToken),
+      //   //   );
+      //   //   if (result != null) {
+      //   //     final placeDetails = await PlaceApiProvider(sessionToken)
+      //   //         .getPlaceDetailFromId(result.placeId);
+
+      //   //     setState(() {
+      //   //       destinationAddressController.text = result.description;
+      //   //     });
+      //   //   }
+      //   // },
+      // ),
+    );
+  }
 
 Widget centerCurrentAndDestLocation(
     height, width, GoogleMapController mapController, WidgetRef ref) {
