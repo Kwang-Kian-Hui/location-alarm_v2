@@ -38,12 +38,11 @@ class AlarmsDatabase {
           ''');
   }
 
-  Future<Alarm> create(Alarm alarm) async {
+  Future<void> addAlarm(Map<String, Object?> alarmDTO) async {
     final db = await instance.database;
 
-    final id = await db.insert(alarmsTable, alarm.toJson());
+    await db.insert(alarmsTable, alarmDTO);
     //use rawInsert for custom insert
-    return alarm.copy(alarmId: id);
   }
 
   Future<Alarm> getAlarm(int id) async {

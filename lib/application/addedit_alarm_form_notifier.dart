@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location_alarm/infrastructure/custom_failures.dart';
+import 'package:location_alarm/application/alarm.dart';
 import 'package:riverpod/riverpod.dart';
 
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
@@ -126,7 +125,55 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   Future<void> _validateInputs() async {}
 
-  void addAlarm() {}
+  void addAlarm() async {
+    state = state.copyWith(
+      hasConnection: true,
+      hasSqlFailure: false,
+    );
+    _validateInputs();
+
+    if (state.nameErrorMessage == null) {
+      state = state.copyWith(
+        isSaving: true,
+        hasConnection: true,
+      );
+    }
+
+    final newAlarm = Alarm(
+      alarmId: 1,
+      alarmName: state.alarmName,
+      alarmRadius: state.alarmRadius,
+      destLat: state.destLat,
+      destLng: state.destLng,
+      alarmStatus: false,
+    );
+
+    if (!state.hasSqlFailure && state.hasConnection) {
+      final failureOrSuccess = await _alarmRepository.addAlarm(newAlarm);
+
+      failureOrSuccess.fold((failure) {
+        failure.maybeWhen(
+          noConnection: () {
+            state = state.copyWith(
+              hasConnection: false,
+              isSaving: false,
+            );
+          },
+          orElse: () {
+            state = state.copyWith(
+              isSaving: false,
+              hasSqlFailure: true,
+            );
+          },
+        );
+      }, (_) {
+        state = state.copyWith(
+          isSaving: false,
+          successful: true,
+        );
+      });
+    }
+  }
 
   @override
   void dispose() {
