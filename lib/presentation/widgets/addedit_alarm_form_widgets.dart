@@ -140,12 +140,13 @@ Widget topFormBar(double height, double width, BuildContext context,
 Widget searchAddressBar(double height, double width, BuildContext context, WidgetRef ref) {
     return Container(
       width: width * 0.7,
+      height: height * 0.08,
       child: TextFormField(
-      initialValue: ref.read(addEditAlarmFormNotifierProvider).destAddress,
-      onChanged: (_) =>
-          ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
+      controller: ref.watch(addEditAlarmFormNotifierProvider).destAddressController,
+      // onChanged: (_) =>
+      //     ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
       decoration: InputDecoration(
-        labelText: "Enter alarm name",
+        labelText: "Enter address",
         errorText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.showErrorMessage))
             ? ref.watch(addEditAlarmFormNotifierProvider
@@ -210,7 +211,7 @@ Widget centerCurrentAndDestLocation(
   final destLng = ref.read(addEditAlarmFormNotifierProvider).destLng;
   return Container(
     width: width * 0.12,
-    height: height * 0.077,
+    height: height * 0.08,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
