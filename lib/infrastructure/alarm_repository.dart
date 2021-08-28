@@ -18,7 +18,8 @@ class AlarmRepository {
     //   return left(const CustomFailures.noConnection());
     // }
     try {
-      await _alarmLocalService.addProduct(newAlarm);
+      print('try add alarm');
+      await _alarmLocalService.addAlarm(newAlarm);
       return right(null);
     } on Exception catch (_) {
       return left(const CustomFailures.unknown());

@@ -1,7 +1,7 @@
 import 'package:location_alarm/database/fields.dart';
 
 class Alarm {
-  final int alarmId;
+  final int? alarmId;
   final String alarmName;
   final int alarmRadius;
   final double destLat;

@@ -39,10 +39,19 @@ class AlarmsDatabase {
   }
 
   Future<void> addAlarm(Map<String, Object?> alarmDTO) async {
+    print('add alarm in db now');
     final db = await instance.database;
+    print('got the db');
 
-    await db.insert(alarmsTable, alarmDTO);
+    final id = await db.insert(alarmsTable, alarmDTO, conflictAlgorithm: ConflictAlgorithm.ignore);
     //use rawInsert for custom insert
+
+    print('$id of the alarm');
+    print('alarm inserted to db');
+    final alarmList = await getAlarmsList();
+
+    print('length: ${alarmList.length}');
+    print(alarmList);
   }
 
   Future<Alarm> getAlarm(int id) async {
@@ -65,7 +74,7 @@ class AlarmsDatabase {
     final db = await instance.database;
 
     final orderBy = '${AlarmFields.alarmId}';
-
+  
     final result = await db.query(alarmsTable, orderBy: orderBy);
     //use rawQuery for custom search
 

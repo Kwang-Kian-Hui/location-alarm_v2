@@ -346,6 +346,7 @@ Widget submitFormButton(
       onPressed: () {
         // add new alarm
         FocusScope.of(context).unfocus();
+        print('add new alarm');
         ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
       },
     ),

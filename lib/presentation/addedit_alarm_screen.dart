@@ -37,6 +37,27 @@ class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AddEditAlarmFormState>(addEditAlarmFormNotifierProvider, (state) {
+      if (state.successful) {
+        Navigator.of(context).pop();
+      }
+
+      if (!state.hasConnection) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('No connection'),
+          duration: Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+        ));
+      }
+
+      if (state.hasSqlFailure) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('An unexpected error occurred. Please contact support.'),
+          duration: Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+        ));
+      }
+    });
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 

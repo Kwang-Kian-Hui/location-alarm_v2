@@ -5,10 +5,10 @@ import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 
-enum MenuOptions {
-  Edit,
-  Delete,
-}
+// enum MenuOptions {
+//   Edit,
+//   Delete,
+// }
 
 class AlarmListScreen extends ConsumerStatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);

@@ -59,8 +59,6 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     _positionStreamSubscription = await Geolocator.getPositionStream(
             intervalDuration: Duration(seconds: 2))
         .listen((Position position) {
-      print(position.latitude);
-      print(position.longitude);
       if (mounted) {
         print('update pos');
         state = state.copyWith(currentPosition: position);
@@ -126,12 +124,14 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   Future<void> _validateInputs() async {}
 
   void addAlarm() async {
+    print('add alarm');
     state = state.copyWith(
       hasConnection: true,
       hasSqlFailure: false,
     );
-    _validateInputs();
+    // _validateInputs();
 
+    print('got here');
     if (state.nameErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
@@ -139,8 +139,9 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
       );
     }
 
+    print('new alarm up');
     final newAlarm = Alarm(
-      alarmId: 1,
+      alarmId: null,
       alarmName: state.alarmName,
       alarmRadius: state.alarmRadius,
       destLat: state.destLat,
@@ -149,6 +150,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     );
 
     if (!state.hasSqlFailure && state.hasConnection) {
+      print('attempt add alarm await');
       final failureOrSuccess = await _alarmRepository.addAlarm(newAlarm);
 
       failureOrSuccess.fold((failure) {
@@ -167,6 +169,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
           },
         );
       }, (_) {
+        print('successfully added');
         state = state.copyWith(
           isSaving: false,
           successful: true,
