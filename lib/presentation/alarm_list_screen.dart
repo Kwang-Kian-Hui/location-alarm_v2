@@ -56,6 +56,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
         ),
         noConnection: (_) => Container(),
         noLocationService: (_) => Container(),
+        failure: (failure) => Container(),
         loaded: (loaded) => ListView.builder(
           itemCount: loaded.alarmList.length,
           itemBuilder: (context, index) => ProviderScope(

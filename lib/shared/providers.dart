@@ -8,13 +8,6 @@ import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/infrastructure/alarm_local_service.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
 
-final alarmListNotifierProvider =
-    StateNotifierProvider.autoDispose<AlarmListNotifier, AlarmListState>(
-        (ref) => AlarmListNotifier());
-
-final currentAlarmItem = Provider.autoDispose<Alarm>((ref) => throw UnimplementedError());
-
-
 final alarmDatabaseProvider = Provider((ref) => AlarmsDatabase.instance);
 
 final alarmLocalServiceProvider = Provider(
@@ -33,3 +26,9 @@ final addEditAlarmFormNotifierProvider = StateNotifierProvider.autoDispose<
     ref.watch(alarmRepositoryProvider),
   ),
 );
+
+final alarmListNotifierProvider =
+    StateNotifierProvider.autoDispose<AlarmListNotifier, AlarmListState>(
+        (ref) => AlarmListNotifier(ref.watch(alarmRepositoryProvider)));
+
+final currentAlarmItem = Provider.autoDispose<Alarm>((ref) => throw UnimplementedError());

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/custom_failures.dart';
 
 part 'alarm_list_state.freezed.dart';
 
@@ -10,5 +11,6 @@ class AlarmListState with _$AlarmListState {
   const factory AlarmListState.loading() = Loading;
   const factory AlarmListState.noConnection() = NoConnection;
   const factory AlarmListState.noLocationService() = NoLocationService;
+  const factory AlarmListState.failure(CustomFailures failure) = Failure;
   const factory AlarmListState.loaded(List<Alarm> alarmList) = Loaded;
 }

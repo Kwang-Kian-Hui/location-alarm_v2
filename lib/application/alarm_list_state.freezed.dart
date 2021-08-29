@@ -32,6 +32,12 @@ class _$AlarmListStateTearOff {
     return const NoLocationService();
   }
 
+  Failure failure(CustomFailures failure) {
+    return Failure(
+      failure,
+    );
+  }
+
   Loaded loaded(List<Alarm> alarmList) {
     return Loaded(
       alarmList,
@@ -50,6 +56,7 @@ mixin _$AlarmListState {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +66,7 @@ mixin _$AlarmListState {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) =>
@@ -69,6 +77,7 @@ mixin _$AlarmListState {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +87,7 @@ mixin _$AlarmListState {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) =>
@@ -142,6 +152,7 @@ class _$Initial extends Initial {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) {
     return initial();
@@ -154,6 +165,7 @@ class _$Initial extends Initial {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) {
@@ -170,6 +182,7 @@ class _$Initial extends Initial {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) {
     return initial(this);
@@ -182,6 +195,7 @@ class _$Initial extends Initial {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {
@@ -238,6 +252,7 @@ class _$Loading extends Loading {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) {
     return loading();
@@ -250,6 +265,7 @@ class _$Loading extends Loading {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) {
@@ -266,6 +282,7 @@ class _$Loading extends Loading {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) {
     return loading(this);
@@ -278,6 +295,7 @@ class _$Loading extends Loading {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {
@@ -337,6 +355,7 @@ class _$NoConnection extends NoConnection {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) {
     return noConnection();
@@ -349,6 +368,7 @@ class _$NoConnection extends NoConnection {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) {
@@ -365,6 +385,7 @@ class _$NoConnection extends NoConnection {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) {
     return noConnection(this);
@@ -377,6 +398,7 @@ class _$NoConnection extends NoConnection {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {
@@ -436,6 +458,7 @@ class _$NoLocationService extends NoLocationService {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) {
     return noLocationService();
@@ -448,6 +471,7 @@ class _$NoLocationService extends NoLocationService {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) {
@@ -464,6 +488,7 @@ class _$NoLocationService extends NoLocationService {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) {
     return noLocationService(this);
@@ -476,6 +501,7 @@ class _$NoLocationService extends NoLocationService {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {
@@ -489,6 +515,144 @@ class _$NoLocationService extends NoLocationService {
 abstract class NoLocationService extends AlarmListState {
   const factory NoLocationService() = _$NoLocationService;
   const NoLocationService._() : super._();
+}
+
+/// @nodoc
+abstract class $FailureCopyWith<$Res> {
+  factory $FailureCopyWith(Failure value, $Res Function(Failure) then) =
+      _$FailureCopyWithImpl<$Res>;
+  $Res call({CustomFailures failure});
+
+  $CustomFailuresCopyWith<$Res> get failure;
+}
+
+/// @nodoc
+class _$FailureCopyWithImpl<$Res> extends _$AlarmListStateCopyWithImpl<$Res>
+    implements $FailureCopyWith<$Res> {
+  _$FailureCopyWithImpl(Failure _value, $Res Function(Failure) _then)
+      : super(_value, (v) => _then(v as Failure));
+
+  @override
+  Failure get _value => super._value as Failure;
+
+  @override
+  $Res call({
+    Object? failure = freezed,
+  }) {
+    return _then(Failure(
+      failure == freezed
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as CustomFailures,
+    ));
+  }
+
+  @override
+  $CustomFailuresCopyWith<$Res> get failure {
+    return $CustomFailuresCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$Failure extends Failure {
+  const _$Failure(this.failure) : super._();
+
+  @override
+  final CustomFailures failure;
+
+  @override
+  String toString() {
+    return 'AlarmListState.failure(failure: $failure)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Failure &&
+            (identical(other.failure, failure) ||
+                const DeepCollectionEquality().equals(other.failure, failure)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
+
+  @JsonKey(ignore: true)
+  @override
+  $FailureCopyWith<Failure> get copyWith =>
+      _$FailureCopyWithImpl<Failure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noConnection,
+    required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
+    required TResult Function(List<Alarm> alarmList) loaded,
+  }) {
+    return failure(this.failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noConnection,
+    TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
+    TResult Function(List<Alarm> alarmList)? loaded,
+    required TResult orElse(),
+  }) {
+    if (failure != null) {
+      return failure(this.failure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(NoConnection value) noConnection,
+    required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
+    required TResult Function(Loaded value) loaded,
+  }) {
+    return failure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(NoConnection value)? noConnection,
+    TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
+    TResult Function(Loaded value)? loaded,
+    required TResult orElse(),
+  }) {
+    if (failure != null) {
+      return failure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Failure extends AlarmListState {
+  const factory Failure(CustomFailures failure) = _$Failure;
+  const Failure._() : super._();
+
+  CustomFailures get failure => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FailureCopyWith<Failure> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -558,6 +722,7 @@ class _$Loaded extends Loaded {
     required TResult Function() loading,
     required TResult Function() noConnection,
     required TResult Function() noLocationService,
+    required TResult Function(CustomFailures failure) failure,
     required TResult Function(List<Alarm> alarmList) loaded,
   }) {
     return loaded(alarmList);
@@ -570,6 +735,7 @@ class _$Loaded extends Loaded {
     TResult Function()? loading,
     TResult Function()? noConnection,
     TResult Function()? noLocationService,
+    TResult Function(CustomFailures failure)? failure,
     TResult Function(List<Alarm> alarmList)? loaded,
     required TResult orElse(),
   }) {
@@ -586,6 +752,7 @@ class _$Loaded extends Loaded {
     required TResult Function(Loading value) loading,
     required TResult Function(NoConnection value) noConnection,
     required TResult Function(NoLocationService value) noLocationService,
+    required TResult Function(Failure value) failure,
     required TResult Function(Loaded value) loaded,
   }) {
     return loaded(this);
@@ -598,6 +765,7 @@ class _$Loaded extends Loaded {
     TResult Function(Loading value)? loading,
     TResult Function(NoConnection value)? noConnection,
     TResult Function(NoLocationService value)? noLocationService,
+    TResult Function(Failure value)? failure,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
   }) {

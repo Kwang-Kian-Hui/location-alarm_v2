@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
-import 'package:location_alarm/database/database.dart';
+import 'package:location_alarm/infrastructure/alarm_repository.dart';
 
 class AlarmListNotifier extends StateNotifier<AlarmListState>{
-  AlarmListNotifier() : super(const AlarmListState.initial());
+  final AlarmRepository _alarmRepository;
+  AlarmListNotifier(this._alarmRepository) : super(const AlarmListState.initial());
 
   Future<void> getAlarmsList() async{
     state = const AlarmListState.loading();
@@ -11,8 +13,11 @@ class AlarmListNotifier extends StateNotifier<AlarmListState>{
     //TODO: internet checker
     //TODO: location permission checker
 
-    final listResult =  await AlarmsDatabase.instance.getAlarmsList();
+    final getListResult =  await _alarmRepository.getAlarmList();
 
-    state = AlarmListState.loaded(listResult);
+    getListResult.fold(
+      (failure) => state = AlarmListState.failure(failure),
+      (alarmList) => state = AlarmListState.loaded(alarmList),
+    );
   }
 }
