@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/database/fields.dart';
 import 'package:sqflite/sqflite.dart';
@@ -39,12 +38,12 @@ class AlarmsDatabase {
           ''');
   }
 
-  Future<Alarm> create(Alarm alarm) async {
+  Future<void> addAlarm(Map<String, Object?> alarmDTO) async {
     final db = await instance.database;
 
-    final id = await db.insert(alarmsTable, alarm.toJson());
+    // ignore: unused_local_variable
+    final id = await db.insert(alarmsTable, alarmDTO, conflictAlgorithm: ConflictAlgorithm.ignore);
     //use rawInsert for custom insert
-    return alarm.copy(alarmId: id);
   }
 
   Future<Alarm> getAlarm(int id) async {
@@ -67,7 +66,7 @@ class AlarmsDatabase {
     final db = await instance.database;
 
     final orderBy = '${AlarmFields.alarmId}';
-
+  
     final result = await db.query(alarmsTable, orderBy: orderBy);
     //use rawQuery for custom search
 
