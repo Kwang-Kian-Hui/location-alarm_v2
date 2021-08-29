@@ -4,14 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
 import 'package:location_alarm/shared/providers.dart';
+import 'package:location_alarm/database/database.dart';
+import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 
-enum MenuOptions {
-  Edit,
-  Delete,
-}
+// enum MenuOptions {
+//   Edit,
+//   Delete,
+// }
 
 class AlarmListScreen extends ConsumerStatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
+  static const routeName = 'alarm-list-screen';
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -27,6 +30,12 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
     Future.microtask(() async {
       await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
     });
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await AlarmsDatabase.instance.close();
   }
 
   @override
@@ -52,6 +61,12 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
             child: const AlarmListItem()),
         ),
       ),
+    return Scaffold(
+      body: Container(),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+      )
     );
   }
 }

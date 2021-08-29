@@ -1,4 +1,4 @@
-final String alarmsTable = 'alarms-table';
+final String alarmsTable = 'alarmstable';
 
 class AlarmFields {
   static final List<String> values = [
@@ -10,7 +10,7 @@ class AlarmFields {
     alarmStatus,
   ];
 
-  static final String alarmId = '_id';
+  static final String alarmId = 'alarmId';
   static final String alarmName = 'alarmName';
   static final String alarmRadius = 'alarmRadius';
   static final String destLat = 'destLat';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 import 'package:location_alarm/presentation/alarm_list_screen.dart';
 
 class LocationApp extends StatefulWidget {
@@ -31,10 +33,10 @@ class _LocationAppState extends State<LocationApp> {
           ),
         ),
         home: AlarmListScreen(),
-        // routes: {
-        //   AddEditAlarmScreen.routeName: (context) => AddEditAlarmScreen(),
-        //   ActiveAlarmScreen.routeName: (context) => ActiveAlarmScreen(),
-        // },
+        routes: {
+          AlarmListScreen.routeName: (context) => AlarmListScreen(),
+          AddEditAlarmScreen.routeName: (context) => ProviderScope(child: AddEditAlarmScreen()),
+        },
     );
   }
 }
