@@ -45,6 +45,10 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
       appBar: AppBar(
         title: Text("Location Alarm"),
       ),
+      floatingActionButton: IconButton(
+        icon: const Icon(Icons.add),
+        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+      ),
       body: state.map(
         initial: (_) => Container(),
         loading: (_) => Center(
@@ -61,12 +65,6 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
             child: const AlarmListItem()),
         ),
       ),
-    return Scaffold(
-      body: Container(),
-      floatingActionButton: IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
-      )
     );
   }
 }
