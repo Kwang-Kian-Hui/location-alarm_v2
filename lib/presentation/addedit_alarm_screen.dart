@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
 import 'package:location_alarm/presentation/addedit_alarm_form.dart';
 
-import 'package:location_alarm/presentation/widgets/addedit_alarm_form_widgets.dart';
 import 'package:location_alarm/presentation/widgets/progress_indicator_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 
@@ -27,19 +24,11 @@ class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
     super.initState();
   }
 
-  // @override
-  // void () {
-  //   super.initState();
-  //   ref
-  //       .read(addEditAlarmFormNotifierProvider.notifier)
-  //       .initialisePositionStream();
-  // }
-
   @override
   Widget build(BuildContext context) {
     ref.listen<AddEditAlarmFormState>(addEditAlarmFormNotifierProvider, (state) {
       if (state.successful) {
-        Navigator.of(context).pop();
+        Navigator.of(context).popUntil((route) => route.isFirst);
       }
 
       if (!state.hasConnection) {

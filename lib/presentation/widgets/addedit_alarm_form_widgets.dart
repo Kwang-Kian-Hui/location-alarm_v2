@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/shared/providers.dart';
 
@@ -89,7 +88,6 @@ Widget camMoveToCurrentLocationButton(double height, double width,
 
 Widget topFormBar(double height, double width, BuildContext context,
     GoogleMapController mapController, WidgetRef ref) {
-  print('top form bar');
   return Positioned.fill(
     child: Align(
       alignment: Alignment.topCenter,
@@ -97,7 +95,7 @@ Widget topFormBar(double height, double width, BuildContext context,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.grey[200],
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(20),
             ),
           ),
@@ -107,8 +105,8 @@ Widget topFormBar(double height, double width, BuildContext context,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text("Destination"),
-                SizedBox(height: 10),
+                const Text("Destination"),
+                const SizedBox(height: 10),
                 // style text maybe?
                 Row(
                   children: [
@@ -118,7 +116,7 @@ Widget topFormBar(double height, double width, BuildContext context,
                         height, width, mapController, ref),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     alarmNameTextFormField(height, width, ref),
@@ -146,19 +144,20 @@ Widget searchAddressBar(double height, double width, BuildContext context, Widge
       // onChanged: (_) =>
       //     ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
       decoration: InputDecoration(
-        labelText: "Enter address",
+        labelText: ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.destinationMarkErrorMessage)) == null ? "Enter address" : null,
         errorText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.showErrorMessage))
             ? ref.watch(addEditAlarmFormNotifierProvider
-                .select((state) => state.nameErrorMessage))
+                .select((state) => state.destinationMarkErrorMessage))
             : null,
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.blue,
             width: 2,
           ),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black,
             width: 2,
@@ -166,40 +165,6 @@ Widget searchAddressBar(double height, double width, BuildContext context, Widge
         ),
       ),
     ),
-      // child: TextField(
-      //   enabled: false,
-        
-      //   decoration: InputDecoration(
-      //     labelText: "Tap on map to set destination",
-      //     focusedBorder: OutlineInputBorder(
-      //       borderSide: BorderSide(
-      //         color: Colors.black,
-      //         width: 2,
-      //       ),
-      //     ),
-      //     disabledBorder: OutlineInputBorder(
-      //       borderSide: BorderSide(
-      //         color: Colors.black,
-      //         width: 2,
-      //       ),
-      //     ),
-      //   ),
-      //   // onTap: () async {
-      //   //   final sessionToken = Uuid().v4();
-      //   //   final Suggestion result = await showSearch(
-      //   //     context: context,
-      //   //     delegate: SearchAddress(sessionToken),
-      //   //   );
-      //   //   if (result != null) {
-      //   //     final placeDetails = await PlaceApiProvider(sessionToken)
-      //   //         .getPlaceDetailFromId(result.placeId);
-
-      //   //     setState(() {
-      //   //       destinationAddressController.text = result.description;
-      //   //     });
-      //   //   }
-      //   // },
-      // ),
     );
   }
 
@@ -217,10 +182,10 @@ Widget centerCurrentAndDestLocation(
       border: Border.all(
         width: 2,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
     ),
     child: IconButton(
-      icon: Icon(
+      icon: const Icon(
         Icons.location_on,
       ),
       onPressed: () {
@@ -262,25 +227,27 @@ Widget centerCurrentAndDestLocation(
 Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
   return Container(
     width: width * 0.458,
-    height: height * 0.068,
+    height: height * 0.08,
     child: TextFormField(
       initialValue: ref.read(addEditAlarmFormNotifierProvider).alarmName,
-      onChanged: (_) =>
-          ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
+      onChanged: (newName) {
+        ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged(newName);
+      },
       decoration: InputDecoration(
-        labelText: "Enter alarm name",
+        labelText: ref.watch(addEditAlarmFormNotifierProvider
+                .select((state) => state.nameErrorMessage)) == null ? "Enter alarm name" : null,
         errorText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.showErrorMessage))
             ? ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.nameErrorMessage))
             : null,
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.blue,
             width: 2,
           ),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black,
             width: 2,
@@ -293,15 +260,15 @@ Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
 
 Widget alarmRadiusDropdownMenu(double height, double width, WidgetRef ref) {
   return Container(
-    padding: EdgeInsets.only(left: 10, right: 10),
+    padding: const EdgeInsets.only(left: 10, right: 10),
     width: width * 0.23,
-    height: height * 0.068,
+    height: height * 0.08,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
         width: 2,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
     ),
     child: DropdownButton<int>(
       isExpanded: true,
@@ -331,7 +298,7 @@ Widget submitFormButton(
     double height, double width, BuildContext context, WidgetRef ref) {
   return Container(
     width: width * 0.12,
-    height: height * 0.068,
+    height: height * 0.08,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
@@ -344,9 +311,7 @@ Widget submitFormButton(
         Icons.done,
       ),
       onPressed: () {
-        // add new alarm
         FocusScope.of(context).unfocus();
-        print('add new alarm');
         ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
       },
     ),

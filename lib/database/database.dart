@@ -39,19 +39,11 @@ class AlarmsDatabase {
   }
 
   Future<void> addAlarm(Map<String, Object?> alarmDTO) async {
-    print('add alarm in db now');
     final db = await instance.database;
-    print('got the db');
 
+    // ignore: unused_local_variable
     final id = await db.insert(alarmsTable, alarmDTO, conflictAlgorithm: ConflictAlgorithm.ignore);
     //use rawInsert for custom insert
-
-    print('$id of the alarm');
-    print('alarm inserted to db');
-    final alarmList = await getAlarmsList();
-
-    print('length: ${alarmList.length}');
-    print(alarmList);
   }
 
   Future<Alarm> getAlarm(int id) async {

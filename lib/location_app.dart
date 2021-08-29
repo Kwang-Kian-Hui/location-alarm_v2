@@ -34,8 +34,8 @@ class _LocationAppState extends State<LocationApp> {
         ),
         home: AlarmListScreen(),
         routes: {
+          AlarmListScreen.routeName: (context) => AlarmListScreen(),
           AddEditAlarmScreen.routeName: (context) => ProviderScope(child: AddEditAlarmScreen()),
-          // ActiveAlarmScreen.routeName: (context) => ActiveAlarmScreen(),
         },
     );
   }

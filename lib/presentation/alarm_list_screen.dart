@@ -12,6 +12,7 @@ import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 
 class AlarmListScreen extends ConsumerStatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
+  static const routeName = 'alarm-list-screen';
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>

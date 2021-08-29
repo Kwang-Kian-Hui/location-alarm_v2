@@ -29,6 +29,7 @@ class _$AddEditAlarmFormStateTearOff {
       required Set<Circle> circles,
       required Position currentPosition,
       required String? nameErrorMessage,
+      required String? destinationMarkErrorMessage,
       required String alarmName,
       required int alarmRadius,
       required double destLat,
@@ -47,6 +48,7 @@ class _$AddEditAlarmFormStateTearOff {
       circles: circles,
       currentPosition: currentPosition,
       nameErrorMessage: nameErrorMessage,
+      destinationMarkErrorMessage: destinationMarkErrorMessage,
       alarmName: alarmName,
       alarmRadius: alarmRadius,
       destLat: destLat,
@@ -73,6 +75,7 @@ mixin _$AddEditAlarmFormState {
   Set<Circle> get circles => throw _privateConstructorUsedError;
   Position get currentPosition => throw _privateConstructorUsedError;
   String? get nameErrorMessage => throw _privateConstructorUsedError;
+  String? get destinationMarkErrorMessage => throw _privateConstructorUsedError;
   String get alarmName => throw _privateConstructorUsedError;
   int get alarmRadius => throw _privateConstructorUsedError;
   double get destLat => throw _privateConstructorUsedError;
@@ -103,6 +106,7 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       Set<Circle> circles,
       Position currentPosition,
       String? nameErrorMessage,
+      String? destinationMarkErrorMessage,
       String alarmName,
       int alarmRadius,
       double destLat,
@@ -133,6 +137,7 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? circles = freezed,
     Object? currentPosition = freezed,
     Object? nameErrorMessage = freezed,
+    Object? destinationMarkErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
@@ -188,6 +193,10 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.nameErrorMessage
           : nameErrorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      destinationMarkErrorMessage: destinationMarkErrorMessage == freezed
+          ? _value.destinationMarkErrorMessage
+          : destinationMarkErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       alarmName: alarmName == freezed
           ? _value.alarmName
           : alarmName // ignore: cast_nullable_to_non_nullable
@@ -232,6 +241,7 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
       Set<Circle> circles,
       Position currentPosition,
       String? nameErrorMessage,
+      String? destinationMarkErrorMessage,
       String alarmName,
       int alarmRadius,
       double destLat,
@@ -264,6 +274,7 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? circles = freezed,
     Object? currentPosition = freezed,
     Object? nameErrorMessage = freezed,
+    Object? destinationMarkErrorMessage = freezed,
     Object? alarmName = freezed,
     Object? alarmRadius = freezed,
     Object? destLat = freezed,
@@ -319,6 +330,10 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.nameErrorMessage
           : nameErrorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      destinationMarkErrorMessage: destinationMarkErrorMessage == freezed
+          ? _value.destinationMarkErrorMessage
+          : destinationMarkErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       alarmName: alarmName == freezed
           ? _value.alarmName
           : alarmName // ignore: cast_nullable_to_non_nullable
@@ -359,6 +374,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       required this.circles,
       required this.currentPosition,
       required this.nameErrorMessage,
+      required this.destinationMarkErrorMessage,
       required this.alarmName,
       required this.alarmRadius,
       required this.destLat,
@@ -391,6 +407,8 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   @override
   final String? nameErrorMessage;
   @override
+  final String? destinationMarkErrorMessage;
+  @override
   final String alarmName;
   @override
   final int alarmRadius;
@@ -403,7 +421,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddressController: $destAddressController)';
+    return 'AddEditAlarmFormState(hasConnection: $hasConnection, showErrorMessage: $showErrorMessage, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, destinationMarkErrorMessage: $destinationMarkErrorMessage, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddressController: $destAddressController)';
   }
 
   @override
@@ -428,8 +446,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.hasMapLoaded, hasMapLoaded) ||
                 const DeepCollectionEquality()
                     .equals(other.hasMapLoaded, hasMapLoaded)) &&
-            (identical(
-                    other.hasInitialPositionLoaded, hasInitialPositionLoaded) ||
+            (identical(other.hasInitialPositionLoaded, hasInitialPositionLoaded) ||
                 const DeepCollectionEquality().equals(
                     other.hasInitialPositionLoaded,
                     hasInitialPositionLoaded)) &&
@@ -448,6 +465,10 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.nameErrorMessage, nameErrorMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.nameErrorMessage, nameErrorMessage)) &&
+            (identical(other.destinationMarkErrorMessage, destinationMarkErrorMessage) ||
+                const DeepCollectionEquality().equals(
+                    other.destinationMarkErrorMessage,
+                    destinationMarkErrorMessage)) &&
             (identical(other.alarmName, alarmName) ||
                 const DeepCollectionEquality()
                     .equals(other.alarmName, alarmName)) &&
@@ -458,11 +479,8 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
                 const DeepCollectionEquality()
                     .equals(other.destLat, destLat)) &&
             (identical(other.destLng, destLng) ||
-                const DeepCollectionEquality()
-                    .equals(other.destLng, destLng)) &&
-            (identical(other.destAddressController, destAddressController) ||
-                const DeepCollectionEquality()
-                    .equals(other.destAddressController, destAddressController)));
+                const DeepCollectionEquality().equals(other.destLng, destLng)) &&
+            (identical(other.destAddressController, destAddressController) || const DeepCollectionEquality().equals(other.destAddressController, destAddressController)));
   }
 
   @override
@@ -480,6 +498,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       const DeepCollectionEquality().hash(circles) ^
       const DeepCollectionEquality().hash(currentPosition) ^
       const DeepCollectionEquality().hash(nameErrorMessage) ^
+      const DeepCollectionEquality().hash(destinationMarkErrorMessage) ^
       const DeepCollectionEquality().hash(alarmName) ^
       const DeepCollectionEquality().hash(alarmRadius) ^
       const DeepCollectionEquality().hash(destLat) ^
@@ -507,6 +526,7 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
           required Set<Circle> circles,
           required Position currentPosition,
           required String? nameErrorMessage,
+          required String? destinationMarkErrorMessage,
           required String alarmName,
           required int alarmRadius,
           required double destLat,
@@ -539,6 +559,8 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   Position get currentPosition => throw _privateConstructorUsedError;
   @override
   String? get nameErrorMessage => throw _privateConstructorUsedError;
+  @override
+  String? get destinationMarkErrorMessage => throw _privateConstructorUsedError;
   @override
   String get alarmName => throw _privateConstructorUsedError;
   @override
