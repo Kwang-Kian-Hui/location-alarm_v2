@@ -29,6 +29,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
     super.initState();
     Future.microtask(() async {
       await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
+      ref.read(alarmListNotifierProvider.notifier).initialisePositionStream();
     });
   }
 

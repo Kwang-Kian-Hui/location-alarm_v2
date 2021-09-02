@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
@@ -13,8 +15,18 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
   AlarmListNotifier(this._alarmRepository)
       : super(const AlarmListState.initial());
 
-  StreamSubscription<Either<CustomFailures, List<Alarm>>>?
-      _alarmListStreamSubscription;
+  StreamController<Position> positionStreamController =
+      StreamController<Position>();
+  StreamSubscription<Position>? _positionStreamSubscription;
+  ValueNotifier<Position> currentPosition = ValueNotifier<Position>(Position(
+      longitude: 0,
+      latitude: 0,
+      timestamp: null,
+      accuracy: 0.0,
+      altitude: 0.0,
+      heading: .00,
+      speed: 0.0,
+      speedAccuracy: 0.0));
 
   Future<void> getAlarmsList() async {
     state = const AlarmListState.loading();
@@ -40,5 +52,21 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
         // currentAlarmItem.overrideWithValue(alarm);
       },
     );
+  }
+
+  void initialisePositionStream() {
+    positionStreamController.addStream(Geolocator.getPositionStream(
+      intervalDuration: Duration(seconds: 2),
+    ));
+    _positionStreamSubscription =
+        positionStreamController.stream.listen((position) {
+      currentPosition.value = position;
+    });
+  }
+
+  @override
+  void dispose() {
+    _positionStreamSubscription?.cancel();
+    super.dispose();
   }
 }

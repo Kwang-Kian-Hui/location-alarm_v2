@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location_alarm/shared/providers.dart';
 
 class AlarmListItem extends ConsumerStatefulWidget {
@@ -21,7 +22,38 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
       child: ListTile(
         leading: Text(alarmData.alarmName),
         title: Text('${alarmData.alarmRadius.toStringAsFixed(2)} m'),
-        subtitle: Text('${alarmData.destLat} + ${alarmData.destLng}'),
+        subtitle: ValueListenableBuilder<Position>(
+                valueListenable: ref.read(alarmListNotifierProvider.notifier).currentPosition,
+                builder: (ctx, value, child) => Text(
+                  _getDistanceString(
+                    Geolocator.distanceBetween(
+                      value.latitude,
+                      value.longitude,
+                      alarmData.destLat,
+                      alarmData.destLng,
+                    ),
+                  ),
+                ),
+              ),
+          // builder: (context, snapshot) {
+          //   return snapshot.data != null
+          //   ? Text('Distance: ${Geolocator.distanceBetween(
+          //           snapshot.data!.latitude,
+          //           snapshot.data!.longitude,
+          //           alarmData.destLat,
+          //           alarmData.destLng)
+          //       .toStringAsFixed(2)}m')
+          //   : Text("");
+          // },),
+        // currentPosition != null
+        //     ? Text('Distance: ${Geolocator.distanceBetween(
+        //             currentPosition.latitude,
+        //             currentPosition.longitude,
+        //             alarmData.destLat,
+        //             alarmData.destLng)
+        //         .toStringAsFixed(2)}m')
+        //     : null,
+        // subtitle: Text('${alarmData.destLat} + ${alarmData.destLng}'),
         trailing: Container(
           width: width * 0.3,
           child: ListTile(
@@ -48,3 +80,10 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
     );
   }
 }
+
+String _getDistanceString(double dist) {
+    if (dist >= 1000) {
+      return (dist / 1000).toStringAsFixed(2) + "km";
+    }
+    return dist.toStringAsFixed(2) + "m";
+  }
