@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
