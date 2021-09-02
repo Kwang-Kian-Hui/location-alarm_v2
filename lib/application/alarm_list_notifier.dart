@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,8 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
-import 'package:location_alarm/infrastructure/custom_failures.dart';
-import 'package:location_alarm/shared/providers.dart';
 
 class AlarmListNotifier extends StateNotifier<AlarmListState> {
   final AlarmRepository _alarmRepository;
@@ -64,9 +61,14 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     });
   }
 
+  void ringAlarm(){
+    
+  }
+
   @override
   void dispose() {
     _positionStreamSubscription?.cancel();
+    positionStreamController.close();
     super.dispose();
   }
 }

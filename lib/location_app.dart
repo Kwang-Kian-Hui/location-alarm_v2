@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 import 'package:location_alarm/presentation/alarm_list_screen.dart';
+import 'package:location_alarm/presentation/settings_screen.dart';
 
 class LocationApp extends StatefulWidget {
   const LocationApp({ Key? key }) : super(key: key);
@@ -35,6 +36,7 @@ class _LocationAppState extends State<LocationApp> {
         home: AlarmListScreen(),
         routes: {
           AlarmListScreen.routeName: (context) => AlarmListScreen(),
+          AlarmSettingsScreen.routeName: (context) => AlarmSettingsScreen(),
           AddEditAlarmScreen.routeName: (context) => ProviderScope(child: AddEditAlarmScreen()),
         },
     );

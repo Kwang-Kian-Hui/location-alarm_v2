@@ -21,39 +21,25 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
       width: width,
       child: ListTile(
         leading: Text(alarmData.alarmName),
-        title: Text('${alarmData.alarmRadius.toStringAsFixed(2)} m'),
+        title:
+            Text('Alarm radius: ${alarmData.alarmRadius.toStringAsFixed(2)} m'),
         subtitle: ValueListenableBuilder<Position>(
-                valueListenable: ref.read(alarmListNotifierProvider.notifier).currentPosition,
-                builder: (ctx, value, child) => Text(
-                  _getDistanceString(
-                    Geolocator.distanceBetween(
-                      value.latitude,
-                      value.longitude,
-                      alarmData.destLat,
-                      alarmData.destLng,
-                    ),
-                  ),
-                ),
-              ),
-          // builder: (context, snapshot) {
-          //   return snapshot.data != null
-          //   ? Text('Distance: ${Geolocator.distanceBetween(
-          //           snapshot.data!.latitude,
-          //           snapshot.data!.longitude,
-          //           alarmData.destLat,
-          //           alarmData.destLng)
-          //       .toStringAsFixed(2)}m')
-          //   : Text("");
-          // },),
-        // currentPosition != null
-        //     ? Text('Distance: ${Geolocator.distanceBetween(
-        //             currentPosition.latitude,
-        //             currentPosition.longitude,
-        //             alarmData.destLat,
-        //             alarmData.destLng)
-        //         .toStringAsFixed(2)}m')
-        //     : null,
-        // subtitle: Text('${alarmData.destLat} + ${alarmData.destLng}'),
+            valueListenable:
+                ref.read(alarmListNotifierProvider.notifier).currentPosition,
+            builder: (ctx, value, child) {
+              double distance = Geolocator.distanceBetween(
+                value.latitude,
+                value.longitude,
+                alarmData.destLat,
+                alarmData.destLng,
+              );
+              if(distance <= alarmData.alarmRadius){
+                //ring alarm
+              }
+              return Text(
+                _getDistanceString(distance),
+              );
+            }),
         trailing: Container(
           width: width * 0.3,
           child: ListTile(
@@ -82,8 +68,8 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
 }
 
 String _getDistanceString(double dist) {
-    if (dist >= 1000) {
-      return (dist / 1000).toStringAsFixed(2) + "km";
-    }
-    return dist.toStringAsFixed(2) + "m";
+  if (dist >= 1000) {
+    return "Distance: " + (dist / 1000).toStringAsFixed(2) + "km";
   }
+  return "Distance: " + dist.toStringAsFixed(2) + "m";
+}

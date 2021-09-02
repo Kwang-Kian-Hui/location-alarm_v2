@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/presentation/settings_screen.dart';
 import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
@@ -44,20 +45,28 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
     final state = ref.watch(alarmListNotifierProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Location Alarm"),
+        title: const Text("Location Alarm"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName),
+          ),
+        ],
       ),
       floatingActionButton: IconButton(
         icon: const Icon(Icons.add),
         onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
       ),
       body: state.map(
-        initial: (_) => Container(),
-        loading: (_) => Center(
+        initial: (_) => const Center(),
+        loading: (_) => const Center(
           child: CircularProgressIndicator(),
         ),
-        noConnection: (_) => Container(),
-        noLocationService: (_) => Container(),
-        failure: (failure) => Container(),
+        noConnection: (_) => Container(), //TODO: no connection
+        noLocationService: (_) => Container(), //TODO: no permission
+        failure: (failure) => const Center(
+          child: Text("An error occured, please contact support for help."),
+        ), //TODO: error
         loaded: (loaded) => ListView.builder(
           itemCount: loaded.alarmList.length,
           itemBuilder: (context, index) => ProviderScope(
