@@ -15,4 +15,9 @@ class AlarmLocalService{
     final newAlarmDTO = newAlarm.toJson();
     await _database.addAlarm(newAlarmDTO);
   }
+
+  Future<void> updateAlarm(Alarm alarm) async {
+    final alarmDTO = alarm.toJson();
+    await _database.updateAlarm(alarmDTO, alarm.alarmId);
+  }
 }

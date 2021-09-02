@@ -17,7 +17,7 @@ class Alarm {
     required this.alarmStatus,
   });
 
-  Alarm copy({
+  Alarm copyWith({
     int? alarmId,
     String? alarmName,
     int? alarmRadius,

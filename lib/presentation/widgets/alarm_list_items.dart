@@ -24,7 +24,13 @@ class AlarmListItem extends ConsumerWidget {
               width: width * 0.15,
               child: Switch(
                 value: alarmData.alarmStatus,
-                onChanged: (newAlarmStatus) {}, //TODO: do change alarmStatus
+                onChanged: (newAlarmStatus) {
+                  ref
+                      .read(alarmListNotifierProvider.notifier)
+                      .updateAlarm(alarmData.copyWith(
+                          alarmStatus: !alarmData.alarmStatus));
+                          
+                }, 
               ),
             ),
             trailing: Container(

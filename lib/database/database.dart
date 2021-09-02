@@ -73,11 +73,11 @@ class AlarmsDatabase {
     return result;
   }
 
-  Future<int> update(Alarm alarm) async {
+  Future<int> updateAlarm(Map<String, Object?> alarmDTO, alarmId) async {
     final db = await instance.database;
 
-    return db.update(alarmsTable, alarm.toJson(),
-        where: '${AlarmFields.alarmId} = ?', whereArgs: [alarm.alarmId]);
+    return db.update(alarmsTable, alarmDTO,
+        where: '${AlarmFields.alarmId} = ?', whereArgs: alarmId);
     //use rawUpdate for custom update
   }
 

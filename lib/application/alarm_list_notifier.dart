@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
 
@@ -17,6 +18,15 @@ class AlarmListNotifier extends StateNotifier<AlarmListState>{
     getListResult.fold(
       (failure) => state = AlarmListState.failure(failure),
       (alarmList) => state = AlarmListState.loaded(alarmList),
+    );
+  }
+
+  Future<void> updateAlarm(Alarm alarm) async{
+    final updateResult = await _alarmRepository.updateAlarm(alarm);
+
+    updateResult.fold(
+      (f) => state = AlarmListState.failure(f),
+      (r) {},
     );
   }
 }
