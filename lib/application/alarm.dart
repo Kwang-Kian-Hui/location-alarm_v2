@@ -6,7 +6,7 @@ class Alarm {
   final int alarmRadius;
   final double destLat;
   final double destLng;
-  final bool alarmStatus;
+  bool alarmStatus;
 
   Alarm({
     required this.alarmId,
