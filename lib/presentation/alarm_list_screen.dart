@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
+import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 
@@ -24,10 +26,9 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() async {
-      await AlarmsDatabase.instance.getAlarmsList();
+      await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
     });
   }
 
@@ -39,12 +40,32 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(alarmListNotifierProvider);
     return Scaffold(
-      body: Container(),
+      appBar: AppBar(
+        title: Text("Location Alarm"),
+      ),
       floatingActionButton: IconButton(
-        icon: Icon(Icons.add),
+        icon: const Icon(Icons.add),
         onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
-      )
+      ),
+      body: state.map(
+        initial: (_) => Container(),
+        loading: (_) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        noConnection: (_) => Container(),
+        noLocationService: (_) => Container(),
+        failure: (failure) => Container(),
+        loaded: (loaded) => ListView.builder(
+          itemCount: loaded.alarmList.length,
+          itemBuilder: (context, index) => ProviderScope(
+            overrides: [
+              currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
+            ],
+            child: const AlarmListItem()),
+        ),
+      ),
     );
   }
 }

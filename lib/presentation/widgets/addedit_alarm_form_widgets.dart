@@ -313,6 +313,7 @@ Widget submitFormButton(
       onPressed: () {
         FocusScope.of(context).unfocus();
         ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
+        ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
       },
     ),
   );

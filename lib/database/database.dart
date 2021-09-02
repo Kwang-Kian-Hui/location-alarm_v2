@@ -62,7 +62,7 @@ class AlarmsDatabase {
     throw Exception('ID $id not found');
   }
 
-  Future<List<Alarm>> getAlarmsList() async {
+  Future<List<Map<String, Object?>>> getAlarmsList() async {
     final db = await instance.database;
 
     final orderBy = '${AlarmFields.alarmId}';
@@ -70,7 +70,7 @@ class AlarmsDatabase {
     final result = await db.query(alarmsTable, orderBy: orderBy);
     //use rawQuery for custom search
 
-    return result.map((json) => Alarm.fromJson(json)).toList();
+    return result;
   }
 
   Future<int> update(Alarm alarm) async {
