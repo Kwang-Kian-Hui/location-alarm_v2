@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -24,6 +25,7 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
       heading: .00,
       speed: 0.0,
       speedAccuracy: 0.0));
+  bool alarmPlaying = false;
 
   Future<void> getAlarmsList() async {
     state = const AlarmListState.loading();
@@ -61,12 +63,21 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     });
   }
 
-  void ringAlarm(){
-    
+  void playAlarm() async {
+    alarmPlaying = true;
+    // await FlutterRingtonePlayer.playRingtone(looping: false); 
   }
 
+  void stopAlarm() async {
+    alarmPlaying = false;
+    // await FlutterRingtonePlayer.stop();
+  }
+
+  
+
   @override
-  void dispose() {
+  void dispose() async {
+    await FlutterRingtonePlayer.stop();
     _positionStreamSubscription?.cancel();
     positionStreamController.close();
     super.dispose();

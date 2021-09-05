@@ -21,26 +21,26 @@ class AlarmSettingsScreen extends ConsumerWidget {
         width: width,
         child: Column(
           children: [
-            Flexible(
-              child: ListTile(
-                title: Text("Settings"),
-                trailing: DropdownButton(
-                  value: dropdownValue,
-                  items: dropdownItems
-                      .map(
-                        (String item) => DropdownMenuItem<String>(
-                          child: Text(item),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) {
-                    if (value != null) dropdownValue = value;
-                  },
-                ),
-              ),
-            ),
-            Flexible(child: ListTile()),
-            Flexible(child: ListTile()),
+            // Flexible(
+            //   child: ListTile(
+            //     title: Text("Settings"),
+            //     trailing: DropdownButton(
+            //       value: dropdownValue,
+            //       items: dropdownItems
+            //           .map(
+            //             (String item) => DropdownMenuItem<String>(
+            //               child: Text(item),
+            //             ),
+            //           )
+            //           .toList(),
+            //       onChanged: (String? value) {
+            //         if (value != null) dropdownValue = value;
+            //       },
+            //     ),
+            //   ),
+            // ),
+            const Flexible(child: ListTile()),
+            const Flexible(child: ListTile()),
           ],
         ),
       ),

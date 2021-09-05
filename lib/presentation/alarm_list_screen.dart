@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
 import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
+import 'package:location_alarm/presentation/widgets/ringing_alarm_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
@@ -49,32 +50,39 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName),
           ),
         ],
       ),
       floatingActionButton: IconButton(
         icon: const Icon(Icons.add),
-        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+        onPressed: () =>
+            Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
       ),
-      body: state.map(
-        initial: (_) => const Center(),
-        loading: (_) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        noConnection: (_) => Container(), //TODO: no connection
-        noLocationService: (_) => Container(), //TODO: no permission
-        failure: (failure) => const Center(
-          child: Text("An error occured, please contact support for help."),
-        ), //TODO: error
-        loaded: (loaded) => ListView.builder(
-          itemCount: loaded.alarmList.length,
-          itemBuilder: (context, index) => ProviderScope(
-            overrides: [
-              currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
-            ],
-            child: const AlarmListItem()),
-        ),
+      body: Stack(
+        children: [
+          state.map(
+            initial: (_) => const Center(),
+            loading: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            noConnection: (_) => Container(), //TODO: no connection
+            noLocationService: (_) => Container(), //TODO: no permission
+            failure: (failure) => const Center(
+              child: Text("An error occured, please contact support for help."),
+            ), //TODO: error
+            loaded: (loaded) => ListView.builder(
+              itemCount: loaded.alarmList.length,
+              itemBuilder: (context, index) => ProviderScope(overrides: [
+                currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
+              ], child: const AlarmListItem()),
+            ),
+          ),
+          RingingAlarmOverlay(
+              isRinging:
+                  ref.watch(alarmListNotifierProvider.notifier).alarmPlaying),
+        ],
       ),
     );
   }
