@@ -33,6 +33,7 @@ dependencies:
   geocoding: ^2.0.0 # placemarks
   background_location: ^0.6.1 # background location when screen is off
   flutter_ringtone_player: ^3.0.0 # alarm ringtone
+  shared_preferences: ^2.0.7 # cache for alarm type selection
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
