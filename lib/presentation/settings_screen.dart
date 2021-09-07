@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:location_alarm/shared/providers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmSettingsScreen extends ConsumerStatefulWidget {
   const AlarmSettingsScreen({Key? key}) : super(key: key);
@@ -29,7 +30,9 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
         ? dropdownValue = 'Alarm & Vibrate'
         : alarmType == 1
             ? dropdownValue = 'Alarm Only'
-            : dropdownValue = 'Vibrate Only';
+            : alarmType == 2
+                ? dropdownValue = 'Vibrate Only'
+                : dropdownValue = "";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -54,8 +57,19 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                       .toList(),
                   onChanged: (String? value) {
                     if (value != null)
-                      setState(() {
+                      setState(() async {
+                        int alarmTypeVal;
+                        value == 'Alarm & Vibrate'
+                            ? alarmTypeVal = 0
+                            : value == 'Alarm Only'
+                                ? alarmTypeVal = 1
+                                : value == 'Vibrate Only'
+                                    ? alarmTypeVal = 2
+                                    : alarmTypeVal = 3;
                         dropdownValue = value;
+                        final pref = await SharedPreferences.getInstance();
+                        // might want to shift this elsewhere to test
+                        await pref.setInt('alarmType', alarmTypeVal);
                       });
                   },
                 ),
