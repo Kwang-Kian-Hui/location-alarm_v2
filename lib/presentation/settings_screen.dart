@@ -12,24 +12,9 @@ class AlarmSettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
-  // List dropdownItems = ["Alarm & Vibrate", "Alarm Only", "Vibrate Only"];
-  // String dropdownValue = "";
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // do i wanna shift the pref here?
-  //   alarmType == 0
-  //       ? dropdownValue = 'Alarm & Vibrate'
-  //       : alarmType == 1
-  //           ? dropdownValue = 'Alarm Only'
-  //           : alarmType == 2
-  //               ? dropdownValue = 'Vibrate Only'
-  //               : dropdownValue = "";
-  // }
-
   @override
   Widget build(BuildContext context) {
+    int alarmType = ModalRoute.of(context)!.settings.arguments as int;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -43,9 +28,12 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
           children: [
             Flexible(
               child: Container(
+                width: width,
+                height: height * 0.1,
                   child: Row(
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     child: TextButton(
                       child: Text(
                         'Alarm Only',
@@ -58,6 +46,7 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                     ),
                   ),
                   Flexible(
+                    fit: FlexFit.tight,
                     child: TextButton(
                       child: Text(
                         'Alarm & Vibrate',
@@ -70,6 +59,7 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                     ),
                   ),
                   Flexible(
+                    fit: FlexFit.tight,
                     child: TextButton(
                       child: Text(
                         'Vibrate Only',

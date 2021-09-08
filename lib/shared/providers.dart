@@ -32,5 +32,3 @@ final alarmListNotifierProvider =
         (ref) => AlarmListNotifier(ref.watch(alarmRepositoryProvider)));
 
 final currentAlarmItem = Provider.autoDispose<Alarm>((ref) => throw UnimplementedError());
-
-int? alarmType;

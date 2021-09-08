@@ -19,6 +19,14 @@ class AlarmRepository {
     }
   }
 
+  Future<Either<CustomFailures, List<Alarm>>> getAlarmListWhereAlarmIsOn() async {
+    try{
+      return right(await _alarmLocalService.getAlarmListWhereAlarmIsOn());
+    } on Exception catch (_) {
+      return left(const CustomFailures.unknown());
+    }
+  }
+
   Future<Either<CustomFailures, void>> addAlarm(Alarm newAlarm) async {
     // if (!await _internetConnectionChecker.hasConnection) {
     //   return left(const CustomFailures.noConnection());

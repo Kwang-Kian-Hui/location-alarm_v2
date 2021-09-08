@@ -18,10 +18,6 @@ class _LocationAppState extends State<LocationApp> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
-      final pref = await SharedPreferences.getInstance();
-      alarmType = pref.getInt('alarmType');
-    });
   }
 
   @override

@@ -1,6 +1,6 @@
-import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
@@ -9,7 +9,7 @@ import 'package:location_alarm/presentation/widgets/ringing_alarm_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmListScreen extends ConsumerStatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
@@ -22,14 +22,18 @@ class AlarmListScreen extends ConsumerStatefulWidget {
 
 class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
   late List<Alarm> alarmsList;
-
+  int? alarmType;
   @override
   void initState() {
     super.initState();
     Future.microtask(() async {
       await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
-      
-      ref.read(alarmListNotifierProvider.notifier).initialisePositionStream();
+      ref
+          .read(alarmListNotifierProvider.notifier)
+          .initialiseBackgroundLocation();
+      // ref.read(alarmListNotifierProvider.notifier).initialisePositionStream();
+      final pref = await SharedPreferences.getInstance();
+      alarmType = pref.getInt('alarmType');
     });
   }
 
@@ -53,7 +57,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () =>
-                Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName),
+                Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName, arguments: alarmType ?? 1),
           ),
         ],
       ),
@@ -66,19 +70,25 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
         children: [
           state.map(
             initial: (_) => Container(),
-        loading: (_) => Center(
-          child: CircularProgressIndicator(),
-        ),
-        noConnection: (_) => Container(),
-        noLocationService: (_) => GestureDetector(
-          onTap: () async {
-            await Permission.locationAlways.request();
-            await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
-          },
-          child: const Center(
-            child: Text("Background location service is required."),
-          ),
-        ),
+            loading: (_) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            noConnection: (_) => Container(),
+            noLocationService: (_) => GestureDetector(
+              onTap: () async {
+                await Permission.locationAlways.request();
+                await ref
+                    .read(alarmListNotifierProvider.notifier)
+                    .getAlarmsList();
+              },
+              child: const Center(
+                child: Text("Background location service is required."),
+              ),
+            ),
+            failure: (failure) => Center(
+              child:
+                  Text("An error occurred. Please contact support for help."),
+            ),
             loaded: (loaded) => ListView.builder(
               itemCount: loaded.alarmList.length,
               itemBuilder: (context, index) => ProviderScope(overrides: [
@@ -86,10 +96,9 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               ], child: const AlarmListItem()),
             ),
           ),
-          if (alarmState) RingingAlarmOverlay(isRinging: alarmState),
+          // if (alarmState) RingingAlarmOverlay(isRinging: alarmState),
         ],
       ),
     );
   }
 }
-
