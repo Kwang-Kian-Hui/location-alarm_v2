@@ -6,6 +6,7 @@ import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // enum MenuOptions {
 //   Edit,
@@ -40,6 +41,8 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     final state = ref.watch(alarmListNotifierProvider);
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +50,8 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
       ),
       floatingActionButton: IconButton(
         icon: const Icon(Icons.add),
-        onPressed: () => Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+        onPressed: () =>
+            Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
       ),
       body: state.map(
         initial: (_) => Container(),
@@ -55,15 +59,23 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
           child: CircularProgressIndicator(),
         ),
         noConnection: (_) => Container(),
-        noLocationService: (_) => Container(),
-        failure: (failure) => Container(),
+        noLocationService: (_) => GestureDetector(
+          onTap: () async {
+            await Permission.locationAlways.request();
+            await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
+          },
+          child: const Center(
+            child: Text("Background location service is required."),
+          ),
+        ),
+        failure: (failure) => Center(
+          child: Text("An unexpected error occurred."),
+        ),
         loaded: (loaded) => ListView.builder(
           itemCount: loaded.alarmList.length,
-          itemBuilder: (context, index) => ProviderScope(
-            overrides: [
-              currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
-            ],
-            child: const AlarmListItem()),
+          itemBuilder: (context, index) => ProviderScope(overrides: [
+            currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
+          ], child: const AlarmListItem()),
         ),
       ),
     );
