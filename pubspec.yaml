@@ -23,15 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: ^2.0.0+3
-  path_provider: ^2.0.1
-  flutter_riverpod: ^1.0.0-dev.5
-  freezed_annotation: ^0.14.2
-  google_maps_flutter: ^2.0.6
-  geolocator: ^7.4.0
-  dartz: ^0.10.0
-  geocoding: ^2.0.0
-  permission_handler: ^8.1.4+2
+  sqflite: ^2.0.0+3  # database
+  path_provider: ^2.0.1 # database file path
+  flutter_riverpod: ^1.0.0-dev.5 # state management
+  freezed_annotation: ^0.14.2 # class build etc
+  google_maps_flutter: ^2.0.6 # google map function
+  geolocator: ^7.4.0 # device location
+  dartz: ^0.10.0 # either<failure,success>
+  geocoding: ^2.0.0 # placemarks
+  background_location: ^0.6.1 # background location when screen is off
+  flutter_ringtone_player: ^3.0.0 # alarm ringtone
+  shared_preferences: ^2.0.7 # cache for alarm type selection
+  permission_handler: ^8.1.4+2 # handle permission status
+  flutter_vibrate: ^1.1.0 # device vibration
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

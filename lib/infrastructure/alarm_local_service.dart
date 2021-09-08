@@ -6,7 +6,13 @@ class AlarmLocalService{
   AlarmLocalService(this._database);
   
   Future<List<Alarm>> getAlarmList() async{
-    final alarmList = await _database.getAlarmsList();
+    final alarmList = await _database.getAlarmList();
+
+    return alarmList.map((json) => Alarm.fromJson(json)).toList();
+  }
+
+  Future<List<Alarm>> getAlarmListWhereAlarmIsOn() async{
+    final alarmList = await _database.getAlarmListWhereAlarmIsOn();
 
     return alarmList.map((json) => Alarm.fromJson(json)).toList();
   }
@@ -14,5 +20,10 @@ class AlarmLocalService{
   Future<void> addAlarm(Alarm newAlarm) async {
     final newAlarmDTO = newAlarm.toJson();
     await _database.addAlarm(newAlarmDTO);
+  }
+
+  Future<void> updateAlarm(Alarm alarm) async {
+    final alarmDTO = alarm.toJson();
+    await _database.updateAlarm(alarmDTO, alarm.alarmId);
   }
 }
