@@ -3,6 +3,7 @@ import 'package:background_location/background_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -110,18 +111,19 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
           }
         }
       }
+      //TODO: play full alarm based on duration? 
       if (ringAlarm) {
         final pref = await SharedPreferences.getInstance();
         final alarmType = pref.getInt('alarmType');
-
         if (alarmType == 1)
           FlutterRingtonePlayer.playRingtone(looping: false); //alarm
         if (alarmType == 2) {
+          Vibrate.vibrate();
           FlutterRingtonePlayer.playRingtone(
               looping: false); //alarm and vibrate
         }
         if (alarmType == 3)
-          FlutterRingtonePlayer.playRingtone(looping: false); //vibrate
+          Vibrate.vibrate();
       } else {
         FlutterRingtonePlayer.stop();
       }
