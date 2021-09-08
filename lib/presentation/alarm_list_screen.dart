@@ -1,3 +1,4 @@
+import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,11 +9,6 @@ import 'package:location_alarm/presentation/widgets/ringing_alarm_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
-
-// enum MenuOptions {
-//   Edit,
-//   Delete,
-// }
 
 class AlarmListScreen extends ConsumerStatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
@@ -31,6 +27,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
     super.initState();
     Future.microtask(() async {
       await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
+      
       ref.read(alarmListNotifierProvider.notifier).initialisePositionStream();
     });
   }
@@ -44,6 +41,8 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(alarmListNotifierProvider);
+    final alarmState =
+        ref.watch(alarmListNotifierProvider.notifier).alarmPlaying;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Location Alarm"),
@@ -79,11 +78,10 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               ], child: const AlarmListItem()),
             ),
           ),
-          RingingAlarmOverlay(
-              isRinging:
-                  ref.watch(alarmListNotifierProvider.notifier).alarmPlaying),
+          if (alarmState) RingingAlarmOverlay(isRinging: alarmState),
         ],
       ),
     );
   }
 }
+

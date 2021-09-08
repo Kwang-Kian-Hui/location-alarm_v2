@@ -16,10 +16,12 @@ class LocationApp extends StatefulWidget {
 
 class _LocationAppState extends State<LocationApp> {
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    final pref = await SharedPreferences.getInstance();
-    alarmType = pref.getInt('alarmType');
+    Future.microtask(() async {
+      final pref = await SharedPreferences.getInstance();
+      alarmType = pref.getInt('alarmType');
+    });
   }
 
   @override

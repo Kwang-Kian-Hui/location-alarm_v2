@@ -14,7 +14,7 @@ class RingingAlarmOverlay extends ConsumerWidget {
     return IgnorePointer(
       ignoring: !isRinging,
       child: GestureDetector(
-        onDoubleTap: () => ref.read(alarmListNotifierProvider.notifier).stopAlarm(), 
+        onDoubleTap: () => ref.read(alarmListNotifierProvider.notifier).turnOffAlarm(), 
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           color: isRinging ? Colors.black.withOpacity(0.8) : Colors.transparent,

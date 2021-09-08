@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:location_alarm/shared/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmSettingsScreen extends ConsumerStatefulWidget {
@@ -14,25 +12,26 @@ class AlarmSettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // do i wanna shift the pref here?
-  }
+  // List dropdownItems = ["Alarm & Vibrate", "Alarm Only", "Vibrate Only"];
+  // String dropdownValue = "";
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // do i wanna shift the pref here?
+  //   alarmType == 0
+  //       ? dropdownValue = 'Alarm & Vibrate'
+  //       : alarmType == 1
+  //           ? dropdownValue = 'Alarm Only'
+  //           : alarmType == 2
+  //               ? dropdownValue = 'Vibrate Only'
+  //               : dropdownValue = "";
+  // }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    List dropdownItems = ["Alarm & Vibrate", "Alarm Only", "Vibrate Only"];
-    String dropdownValue = "";
-    alarmType == 0
-        ? dropdownValue = 'Alarm & Vibrate'
-        : alarmType == 1
-            ? dropdownValue = 'Alarm Only'
-            : alarmType == 2
-                ? dropdownValue = 'Vibrate Only'
-                : dropdownValue = "";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -43,37 +42,78 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
         child: Column(
           children: [
             Flexible(
-              child: ListTile(
-                title: Text("Settings"),
-                trailing: DropdownButton(
-                  value: dropdownValue,
-                  items: dropdownItems
-                      .map(
-                        (item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(item),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) {
-                    if (value != null)
-                      setState(() async {
-                        int alarmTypeVal;
-                        value == 'Alarm & Vibrate'
-                            ? alarmTypeVal = 0
-                            : value == 'Alarm Only'
-                                ? alarmTypeVal = 1
-                                : value == 'Vibrate Only'
-                                    ? alarmTypeVal = 2
-                                    : alarmTypeVal = 3;
-                        dropdownValue = value;
+              child: Container(
+                  child: Row(
+                children: [
+                  Flexible(
+                    child: TextButton(
+                      child: Text(
+                        'Alarm Only',
+                      ),
+                      onPressed: () async {
                         final pref = await SharedPreferences.getInstance();
                         // might want to shift this elsewhere to test
-                        await pref.setInt('alarmType', alarmTypeVal);
-                      });
-                  },
-                ),
-              ),
+                        await pref.setInt('alarmType', 1);
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: TextButton(
+                      child: Text(
+                        'Alarm & Vibrate',
+                      ),
+                      onPressed: () async {
+                        final pref = await SharedPreferences.getInstance();
+                        // might want to shift this elsewhere to test
+                        await pref.setInt('alarmType', 2);
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: TextButton(
+                      child: Text(
+                        'Vibrate Only',
+                      ),
+                      onPressed: () async {
+                        final pref = await SharedPreferences.getInstance();
+                        // might want to shift this elsewhere to test
+                        await pref.setInt('alarmType', 3);
+                      },
+                    ),
+                  ),
+                ],
+              )
+                  // title: Text("Settings"),
+                  // trailing: DropdownButton(
+                  //   value: dropdownValue,
+                  //   icon: const Icon(Icons.arrow_drop_down),
+                  //   items: dropdownItems
+                  //       .map(
+                  //         (item) => DropdownMenuItem<String>(
+                  //           value: item,
+                  //           child: Text(item),
+                  //         ),
+                  //       )
+                  //       .toList(),
+                  //   onChanged: (String? value) {
+                  //     if (value != null)
+                  //       setState(() async {
+                  //         int alarmTypeVal;
+                  //         value == 'Alarm & Vibrate'
+                  //             ? alarmTypeVal = 0
+                  //             : value == 'Alarm Only'
+                  //                 ? alarmTypeVal = 1
+                  //                 : value == 'Vibrate Only'
+                  //                     ? alarmTypeVal = 2
+                  //                     : alarmTypeVal = 3;
+                  //         dropdownValue = value;
+                  //         final pref = await SharedPreferences.getInstance();
+                  //         // might want to shift this elsewhere to test
+                  //         await pref.setInt('alarmType', alarmTypeVal);
+                  //       });
+                  //   },
+                  // ),
+                  ),
             ),
             const Flexible(child: ListTile()),
             const Flexible(child: ListTile()),
