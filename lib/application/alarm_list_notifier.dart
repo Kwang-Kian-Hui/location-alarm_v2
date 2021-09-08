@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
@@ -14,7 +15,6 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
   final AlarmRepository _alarmRepository;
   AlarmListNotifier(this._alarmRepository)
       : super(const AlarmListState.initial());
-
   StreamController<Position> positionStreamController =
       StreamController<Position>();
   StreamSubscription<Position>? _positionStreamSubscription;
@@ -35,12 +35,18 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
 
     //TODO: internet checker
     //TODO: location permission checker
-    final getListResult = await _alarmRepository.getAlarmList();
+    if (await Permission.locationAlways.request().isGranted) {
+      // Either the permission was already granted before or the user just granted it.
+      print('get list now');
+      final getListResult = await _alarmRepository.getAlarmList();
 
-    getListResult.fold(
-      (failure) => state = AlarmListState.failure(failure),
-      (alarmList) => state = AlarmListState.loaded(alarmList),
-    );
+      getListResult.fold(
+        (failure) => state = AlarmListState.failure(failure),
+        (alarmList) => state = AlarmListState.loaded(alarmList),
+      );
+    } else {
+      state = AlarmListState.noLocationService();
+    }
   }
 
   Future<void> updateAlarm(Alarm alarm) async {
