@@ -5,7 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
 import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
-import 'package:location_alarm/presentation/widgets/ringing_alarm_overlay.dart';
 import 'package:location_alarm/shared/providers.dart';
 import 'package:location_alarm/database/database.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';

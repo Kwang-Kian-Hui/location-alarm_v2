@@ -93,7 +93,7 @@ class AlarmsDatabase {
     //use rawUpdate for custom update
   }
 
-  Future<int> delete(int id) async {
+  Future<int> deleteAlarm(int id) async {
     final db = await instance.database;
 
     return db.delete(alarmsTable,

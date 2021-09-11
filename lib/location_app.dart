@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 import 'package:location_alarm/presentation/alarm_list_screen.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
-import 'package:location_alarm/shared/providers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationApp extends StatefulWidget {
   const LocationApp({Key? key}) : super(key: key);

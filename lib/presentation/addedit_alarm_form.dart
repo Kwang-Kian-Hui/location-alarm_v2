@@ -4,11 +4,28 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/presentation/widgets/addedit_alarm_form_widgets.dart';
 import 'package:location_alarm/shared/providers.dart';
 
-class AddEditAlarmForm extends ConsumerWidget {
+class AddEditAlarmForm extends ConsumerStatefulWidget {
   const AddEditAlarmForm({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AddEditAlarmFormState();
+}
+
+class _AddEditAlarmFormState extends ConsumerState<AddEditAlarmForm> {
+  @override
+  void initState() {
+    if(ref.read(addEditAlarmFormNotifierProvider).isInit == false){ 
+    Future.microtask(() async => await ref
+        .read(addEditAlarmFormNotifierProvider.notifier)
+        .initialiseMarkersAndCircles());
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     void _onMapCreated(GoogleMapController controller) {
       ref
           .read(addEditAlarmFormNotifierProvider.notifier)
@@ -16,6 +33,7 @@ class AddEditAlarmForm extends ConsumerWidget {
     }
 
     void _onTapAction(LatLng latlng) async {
+      print('tapped: ${latlng.latitude}, ${latlng.longitude}');
       try {
         ref
             .read(addEditAlarmFormNotifierProvider.notifier)

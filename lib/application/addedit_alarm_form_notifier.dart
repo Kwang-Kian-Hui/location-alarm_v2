@@ -45,7 +45,16 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     state = state.copyWith(destLng: longitude);
   }
 
-  // void alarmDestinationAddressChanged() {}
+  void initialiseValueForEditAlarmForm(Alarm alarm) {
+    state = state.copyWith(
+      isInit: false,
+      alarmId: alarm.alarmId,
+      alarmName: alarm.alarmName,
+      alarmRadius: alarm.alarmRadius,
+      destLat: alarm.destLat,
+      destLng: alarm.destLng,
+    );
+  }
 
   void loadMapController(GoogleMapController mapController) {
     state = state.copyWith(
@@ -68,6 +77,16 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     });
   }
 
+  Future<void> initialiseMarkersAndCircles() async {
+    List<Placemark> destinationPlacemark =
+        await placemarkFromCoordinates(state.destLat, state.destLng);
+    final destinationAddress =
+        "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
+    state.destAddressController.text = destinationAddress;
+
+    createNewMarkerAndCircle();
+  }
+
   void addOrUpdateNewMarker(LatLng newLatLng) async {
     List<Placemark> destinationPlacemark =
         await placemarkFromCoordinates(newLatLng.latitude, newLatLng.longitude);
@@ -78,6 +97,10 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
         "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
     state.destAddressController.text = destinationAddress;
 
+    createNewMarkerAndCircle();
+  }
+
+  void createNewMarkerAndCircle(){
     Marker newMarker = Marker(
       markerId: MarkerId('${LatLng(state.destLat, state.destLng)}'),
       position: LatLng(
@@ -134,7 +157,6 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   void addAlarm() async {
     state = state.copyWith(
-      hasConnection: true,
       hasSqlFailure: false,
     );
     _validateInputs();
@@ -142,7 +164,6 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
-        hasConnection: true,
       );
       final newAlarm = Alarm(
         alarmId: null,
@@ -153,17 +174,52 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
         alarmStatus: false,
       );
 
-      if (!state.hasSqlFailure && state.hasConnection) {
+      if (!state.hasSqlFailure) {
         final failureOrSuccess = await _alarmRepository.addAlarm(newAlarm);
 
         failureOrSuccess.fold((failure) {
           failure.maybeWhen(
-            noConnection: () {
+            orElse: () {
               state = state.copyWith(
-                hasConnection: false,
                 isSaving: false,
+                hasSqlFailure: true,
               );
             },
+          );
+        }, (_) {
+          state = state.copyWith(
+            isSaving: false,
+            successful: true,
+          );
+        });
+      }
+    }
+  }
+
+  void updateAlarm() async {
+    state = state.copyWith(
+      hasSqlFailure: false,
+    );
+    _validateInputs();
+
+    if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
+      state = state.copyWith(
+        isSaving: true,
+      );
+      final updatedAlarm = Alarm(
+        alarmId: state.alarmId,
+        alarmName: state.alarmName,
+        alarmRadius: state.alarmRadius,
+        destLat: state.destLat,
+        destLng: state.destLng,
+        alarmStatus: false,
+      );
+
+      if (!state.hasSqlFailure) {
+        final failureOrSuccess = await _alarmRepository.updateAlarm(updatedAlarm);
+
+        failureOrSuccess.fold((failure) {
+          failure.maybeWhen(
             orElse: () {
               state = state.copyWith(
                 isSaving: false,
