@@ -72,9 +72,7 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
 
     deleteResult.fold(
       (f) => state = AlarmListState.failure(f),
-      (r) => (){
-
-      },
+      (r) => () {},
     );
   }
 
@@ -123,21 +121,24 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
           }
         }
       }
-      //TODO: play full alarm based on duration? 
+      //TODO: play full alarm based on duration?
       if (ringAlarm) {
-        final pref = await SharedPreferences.getInstance();
-        final alarmType = pref.getInt('alarmType');
-        if (alarmType == 1)
-          FlutterRingtonePlayer.playRingtone(looping: false); //alarm
-        if (alarmType == 2) {
-          Vibrate.vibrate();
-          FlutterRingtonePlayer.playRingtone(
-              looping: false); //alarm and vibrate
+        if (!alarmPlaying) {
+          alarmPlaying = true;
+          final pref = await SharedPreferences.getInstance();
+          final alarmType = pref.getInt('alarmType');
+          if (alarmType == 1) FlutterRingtonePlayer.playAlarm(); //alarm
+          if (alarmType == 2) {
+            Vibrate.vibrate();
+            FlutterRingtonePlayer.playAlarm(); //alarm and vibrate
+          }
+          if (alarmType == 3) Vibrate.vibrate();
         }
-        if (alarmType == 3)
-          Vibrate.vibrate();
       } else {
-        FlutterRingtonePlayer.stop();
+        if (alarmPlaying) {
+          FlutterRingtonePlayer.stop();
+          alarmPlaying = false;
+        }
       }
     });
   }
@@ -151,37 +152,6 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
   //     currentPosition.value = position;
   //   });
   // }
-
-  void turnOnAlarm() async {
-    alarmPlaying = true;
-    // await FlutterRingtonePlayer.playRingtone(looping: false);
-  }
-
-  void turnOffAlarm() async {
-    alarmPlaying = false;
-    // await FlutterRingtonePlayer.stop();
-  }
-
-  void ringAlarm() {
-    Timer.periodic(Duration(seconds: 2), (Timer t) {
-      // if (alarmType == 1) {
-      //   FlutterRingtonePlayer.playRingtone(looping: false);
-      // }
-      // if (alarmType == 2) {
-      //   FlutterRingtonePlayer.playRingtone(looping: false);
-      //   //do vibration
-      // }
-      // if (alarmType == 3) {
-      //   //do vibration
-      // } else {
-      //   FlutterRingtonePlayer.playRingtone(looping: false);
-      // }
-
-      if (!alarmPlaying) {
-        t.cancel();
-      }
-    });
-  }
 
   @override
   void dispose() async {

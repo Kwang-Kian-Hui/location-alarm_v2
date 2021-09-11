@@ -39,10 +39,6 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
                 alarmData.destLat,
                 alarmData.destLng,
               );
-              if (distance <= alarmData.alarmRadius && alarmData.alarmStatus) {
-                //ring alarm
-                ref.read(alarmListNotifierProvider.notifier).turnOnAlarm();
-              }
               return Text(
                 _getDistanceString(distance),
               );
