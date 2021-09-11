@@ -44,11 +44,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     final state = ref.watch(alarmListNotifierProvider);
-    final alarmState =
-        ref.watch(alarmListNotifierProvider.notifier).alarmPlaying;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Location Alarm"),
@@ -61,6 +57,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
         ],
       ),
       floatingActionButton: IconButton(
+        splashColor: Theme.of(context).primaryColor,
         icon: const Icon(Icons.add),
         onPressed: () =>
             Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
@@ -68,11 +65,11 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
       body: Stack(
         children: [
           state.map(
-            initial: (_) => Container(),
+            initial: (_) => Center(),
             loading: (_) => Center(
               child: CircularProgressIndicator(),
             ),
-            noConnection: (_) => Container(),
+            noConnection: (_) => Center(),
             noLocationService: (_) => GestureDetector(
               onTap: () async {
                 await Permission.locationAlways.request();

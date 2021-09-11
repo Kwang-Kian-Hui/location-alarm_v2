@@ -232,6 +232,7 @@ Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
         ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged(newName);
       },
       decoration: InputDecoration(
+        focusColor: Colors.black,
         labelText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.nameErrorMessage)) == null ? "Enter alarm name" : null,
         errorText: ref.watch(addEditAlarmFormNotifierProvider
