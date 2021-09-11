@@ -10,7 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
-import 'package:location_alarm/shared/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmListNotifier extends StateNotifier<AlarmListState> {
@@ -37,7 +36,9 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     state = const AlarmListState.loading();
 
     //TODO: internet checker
-    //TODO: location permission checker
+
+    await Permission.locationAlways.request();
+
     if (await Permission.locationAlways.request().isGranted) {
       // Either the permission was already granted before or the user just granted it.
       final getListResult = await _alarmRepository.getAlarmList();
@@ -62,6 +63,17 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
       (r) => () {
         // print('override value');
         // currentAlarmItem.overrideWithValue(alarm);
+      },
+    );
+  }
+
+  Future<void> deleteAlarm(int alarmId) async {
+    final deleteResult = await _alarmRepository.deleteAlarm(alarmId);
+
+    deleteResult.fold(
+      (f) => state = AlarmListState.failure(f),
+      (r) => (){
+
       },
     );
   }

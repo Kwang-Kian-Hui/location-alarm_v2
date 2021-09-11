@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 import 'package:location_alarm/shared/providers.dart';
+
+enum MenuOptions {
+  Edit,
+  Delete,
+}
 
 class AlarmListItem extends ConsumerStatefulWidget {
   const AlarmListItem({Key? key}) : super(key: key);
@@ -33,7 +39,7 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
                 alarmData.destLat,
                 alarmData.destLng,
               );
-              if(distance <= alarmData.alarmRadius && alarmData.alarmStatus){
+              if (distance <= alarmData.alarmRadius && alarmData.alarmStatus) {
                 //ring alarm
                 ref.read(alarmListNotifierProvider.notifier).turnOnAlarm();
               }
@@ -59,7 +65,25 @@ class _AlarmListItemState extends ConsumerState<AlarmListItem> {
             ),
             trailing: Container(
               width: width * 0.1,
-              child: Icon(Icons.more_vert),
+              child: PopupMenuButton(
+                onSelected: (MenuOptions selectedValue) async {
+                  if (selectedValue == MenuOptions.Edit) {
+                    Navigator.of(context).pushNamed(
+                        AddEditAlarmScreen.routeName,
+                        arguments: alarmData);
+                  } else {
+                    await ref
+                        .read(alarmListNotifierProvider.notifier)
+                        .deleteAlarm(alarmData.alarmId!);
+                    await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
+                  }
+                },
+                itemBuilder: (_) => [
+                  PopupMenuItem(child: Text("Edit"), value: MenuOptions.Edit),
+                  PopupMenuItem(
+                      child: Text("Delete"), value: MenuOptions.Delete),
+                ],
+              ),
             ), //TODO: do menu for edit and delete
           ),
         ),

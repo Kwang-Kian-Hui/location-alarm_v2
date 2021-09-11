@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
+import 'package:location_alarm/application/alarm.dart';
 import 'package:location_alarm/presentation/addedit_alarm_form.dart';
 
 import 'package:location_alarm/presentation/widgets/progress_indicator_overlay.dart';
@@ -18,30 +19,32 @@ class AddEditAlarmScreen extends ConsumerStatefulWidget {
 class _AddEditAlarmScreenState extends ConsumerState<AddEditAlarmScreen> {
   @override
   void initState() {
-    Future.microtask(() async => await ref
-        .read(addEditAlarmFormNotifierProvider.notifier)
-        .initialisePositionStream());
+    Future.microtask(() async {
+      await ref
+          .read(addEditAlarmFormNotifierProvider.notifier)
+          .initialisePositionStream();
+      final arguments = ModalRoute.of(context)?.settings.arguments;
+      if (arguments != null) {
+        ref
+            .read(addEditAlarmFormNotifierProvider.notifier)
+            .initialiseValueForEditAlarmForm(arguments as Alarm);
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AddEditAlarmFormState>(addEditAlarmFormNotifierProvider, (state) {
+    ref.listen<AddEditAlarmFormState>(addEditAlarmFormNotifierProvider,
+        (state) {
       if (state.successful) {
         Navigator.of(context).popUntil((route) => route.isFirst);
       }
 
-      if (!state.hasConnection) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('No connection'),
-          duration: Duration(seconds: 5),
-          behavior: SnackBarBehavior.floating,
-        ));
-      }
-
       if (state.hasSqlFailure) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('An unexpected error occurred. Please contact support.'),
+          content:
+              Text('An unexpected error occurred. Please contact support.'),
           duration: Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
         ));

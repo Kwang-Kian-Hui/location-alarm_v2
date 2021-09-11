@@ -141,8 +141,6 @@ Widget searchAddressBar(double height, double width, BuildContext context, Widge
       height: height * 0.08,
       child: TextFormField(
       controller: ref.watch(addEditAlarmFormNotifierProvider).destAddressController,
-      // onChanged: (_) =>
-      //     ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged,
       decoration: InputDecoration(
         labelText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.destinationMarkErrorMessage)) == null ? "Enter address" : null,
@@ -312,7 +310,12 @@ Widget submitFormButton(
       ),
       onPressed: () {
         FocusScope.of(context).unfocus();
-        ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
+        if(ref.read(addEditAlarmFormNotifierProvider).isInit == false){
+          ref.read(addEditAlarmFormNotifierProvider.notifier).updateAlarm();
+        }else{
+          ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
+        }
+        
         ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
       },
     ),

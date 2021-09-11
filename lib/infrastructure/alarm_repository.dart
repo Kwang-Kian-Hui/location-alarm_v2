@@ -39,12 +39,24 @@ class AlarmRepository {
     }
   }
 
-  Future<Either<CustomFailures, void>> updateAlarm(Alarm alarm) async {
+  Future<Either<CustomFailures, void>> updateAlarm(Alarm updatedAlarm) async {
     // if (!await _internetConnectionChecker.hasConnection) {
     //   return left(const CustomFailures.noConnection());
     // }
     try {
-      await _alarmLocalService.updateAlarm(alarm);
+      await _alarmLocalService.updateAlarm(updatedAlarm);
+      return right(null);
+    } on Exception catch (_) {
+      return left(const CustomFailures.unknown());
+    }
+  }
+
+  Future<Either<CustomFailures, void>> deleteAlarm(int alarmId) async {
+    // if (!await _internetConnectionChecker.hasConnection) {
+    //   return left(const CustomFailures.noConnection());
+    // }
+    try {
+      await _alarmLocalService.deleteAlarm(alarmId);
       return right(null);
     } on Exception catch (_) {
       return left(const CustomFailures.unknown());

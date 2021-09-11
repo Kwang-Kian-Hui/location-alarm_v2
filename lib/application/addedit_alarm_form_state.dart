@@ -9,8 +9,8 @@ part 'addedit_alarm_form_state.freezed.dart';
 class AddEditAlarmFormState with _$AddEditAlarmFormState {
   const AddEditAlarmFormState._();
   const factory AddEditAlarmFormState({
-    required bool hasConnection,
     required bool showErrorMessage,
+    required bool isInit,
     required bool isSaving,
     required bool successful,
     required bool hasSqlFailure,
@@ -22,6 +22,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
     required Position currentPosition,
     required String? nameErrorMessage,
     required String? destinationMarkErrorMessage,
+    required int? alarmId,
     required String alarmName,
     required int alarmRadius,
     required double destLat,
@@ -30,8 +31,8 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
   }) = _AddEditAlarmFormState;
 
   factory AddEditAlarmFormState.initial() => AddEditAlarmFormState(
-        hasConnection: true,
         showErrorMessage: false,
+        isInit: true,
         isSaving: false,
         successful: false,
         hasSqlFailure: false,
@@ -51,6 +52,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
         mapController: null,
         nameErrorMessage: null,
         destinationMarkErrorMessage: null,
+        alarmId: null,
         alarmName: '',
         alarmRadius: 100,
         destLat: 0.0,
