@@ -92,7 +92,6 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               ], child: const AlarmListItem()),
             ),
           ),
-          // if (alarmState) RingingAlarmOverlay(isRinging: alarmState),
         ],
       ),
     );
