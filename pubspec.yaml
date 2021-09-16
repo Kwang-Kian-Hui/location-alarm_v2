@@ -36,6 +36,7 @@ dependencies:
   shared_preferences: ^2.0.7 # cache for alarm type selection
   permission_handler: ^8.1.4+2 # handle permission status
   flutter_vibrate: ^1.1.0 # device vibration
+  flutter_screenutil: ^5.0.0+2 # app responsiveness
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
