@@ -33,16 +33,19 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 10.w),
+                      padding: EdgeInsets.only(left: 15.w, top: 15.h),
                       child: Text(
                         "Alarm type:",
                         style: ThemeData().textTheme.bodyText1,
                       ),
                     ),
-                    Tooltip(
-                        message:
-                            "Ringtone plays the default ringtone of device",
-                        child: Icon(Icons.help_outlined)),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.w, top: 8.h),
+                      child: Tooltip(
+                          message:
+                              "Ringtone plays the default ringtone of device",
+                          child: Icon(Icons.help_outlined)),
+                    ),
                   ],
                 ),
               ),
@@ -58,6 +61,7 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                       child: TextButton(
                         child: Text(
                           'Ringtone Only',
+                          style: ThemeData().textTheme.bodyText2,
                         ),
                         onPressed: () async {
                           final pref = await SharedPreferences.getInstance();
@@ -71,6 +75,7 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                       child: TextButton(
                         child: Text(
                           'Ringtone & Vibrate',
+                          style: ThemeData().textTheme.bodyText2,
                         ),
                         onPressed: () async {
                           final pref = await SharedPreferences.getInstance();
@@ -84,6 +89,7 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                       child: TextButton(
                         child: Text(
                           'Vibrate Only',
+                          style: ThemeData().textTheme.bodyText2,
                         ),
                         onPressed: () async {
                           final pref = await SharedPreferences.getInstance();
