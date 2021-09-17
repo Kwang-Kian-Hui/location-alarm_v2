@@ -5,11 +5,14 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/application/place_and_suggestion.dart';
 import 'package:location_alarm/application/value_validators.dart';
+import 'package:location_alarm/infrastructure/google_places_api_provider.dart';
 import 'package:riverpod/riverpod.dart';
 
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   final AlarmRepository _alarmRepository;
@@ -43,6 +46,10 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   void alarmDestLngChanged(double longitude) {
     state = state.copyWith(destLng: longitude);
+  }
+
+  void addressTextChanged(String address){
+    state.destAddressController.text = address;
   }
 
   void initialiseValueForEditAlarmForm(Alarm alarm) {
@@ -82,9 +89,14 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
         await placemarkFromCoordinates(state.destLat, state.destLng);
     final destinationAddress =
         "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
-    state.destAddressController.text = destinationAddress;
+    addressTextChanged(destinationAddress);
 
     createNewMarkerAndCircle();
+  }
+
+  Future<void> initialiseSession() async{
+    initialiseMarkersAndCircles();
+    state = state.copyWith(sessionToken: Uuid().v4());
   }
 
   void addOrUpdateNewMarker(LatLng newLatLng) async {
@@ -135,6 +147,12 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
       state.circles.clear();
       state.circles.add(newCircle);
     }
+  }
+
+  void retrieveResultAddressDetail(Suggestion result) async {
+    // GooglePlaceApiProvider() getPlaceDetailFromId
+    final placeDetails = await GooglePlaceApiProvider(state.sessionToken).getPlaceDetailFromId(result.placeId);
+    // addressTextChanged(placeDetails);
   }
 
   Future<void> _validateInputs() async {

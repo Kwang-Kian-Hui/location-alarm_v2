@@ -16,6 +16,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
     required bool hasSqlFailure,
     required bool hasMapLoaded,
     required bool hasInitialPositionLoaded,
+    required String? sessionToken,
     required GoogleMapController? mapController,
     required Set<Marker> markers,
     required Set<Circle> circles,
@@ -38,6 +39,7 @@ class AddEditAlarmFormState with _$AddEditAlarmFormState {
         hasSqlFailure: false,
         hasMapLoaded: false,
         hasInitialPositionLoaded: false,
+        sessionToken: null,
         markers: <Marker>{},
         circles: <Circle>{},
         currentPosition: Position(

@@ -15,17 +15,19 @@ class AddEditAlarmForm extends ConsumerStatefulWidget {
 class _AddEditAlarmFormState extends ConsumerState<AddEditAlarmForm> {
   @override
   void initState() {
-    if(ref.read(addEditAlarmFormNotifierProvider).isInit == false){ 
-    Future.microtask(() async => await ref
-        .read(addEditAlarmFormNotifierProvider.notifier)
-        .initialiseMarkersAndCircles());
+    if (ref.read(addEditAlarmFormNotifierProvider).isInit == false) {
+      Future.microtask(() async {
+        // await ref
+        //     .read(addEditAlarmFormNotifierProvider.notifier)
+        //     .initialiseMarkersAndCircles();
+        await ref.read(addEditAlarmFormNotifierProvider.notifier).initialiseSession();
+      });
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     void _onMapCreated(GoogleMapController controller) {
       ref
           .read(addEditAlarmFormNotifierProvider.notifier)
