@@ -139,7 +139,7 @@ Widget topFormBar(double height, double width, BuildContext context,
 
 Widget searchAddressBar(
     double height, double width, BuildContext context, WidgetRef ref) {
-    final refNotifier = ref.read(addEditAlarmFormNotifierProvider.notifier);
+    // final refNotifier = ref.read(addEditAlarmFormNotifierProvider.notifier);
   return Container(
     width: width * 0.7,
     height: height * 0.08,
@@ -174,6 +174,7 @@ Widget searchAddressBar(
             await showSearch(context: context, delegate: SearchAddress(
               ref.read(addEditAlarmFormNotifierProvider).sessionToken
             ));
+        print(result);
         if(result != null){
           ref.read(addEditAlarmFormNotifierProvider.notifier).retrieveResultAddressDetail(result);
         }

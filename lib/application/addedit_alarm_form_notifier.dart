@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:geolocator/geolocator.dart';
@@ -48,7 +49,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     state = state.copyWith(destLng: longitude);
   }
 
-  void addressTextChanged(String address){
+  void addressTextChanged(String address) {
     state.destAddressController.text = address;
   }
 
@@ -94,7 +95,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     createNewMarkerAndCircle();
   }
 
-  Future<void> initialiseSession() async{
+  Future<void> initialiseSession() async {
     initialiseMarkersAndCircles();
     state = state.copyWith(sessionToken: Uuid().v4());
   }
@@ -112,7 +113,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     createNewMarkerAndCircle();
   }
 
-  void createNewMarkerAndCircle(){
+  void createNewMarkerAndCircle() {
     Marker newMarker = Marker(
       markerId: MarkerId('${LatLng(state.destLat, state.destLng)}'),
       position: LatLng(
@@ -151,8 +152,34 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   void retrieveResultAddressDetail(Suggestion result) async {
     // GooglePlaceApiProvider() getPlaceDetailFromId
-    final placeDetails = await GooglePlaceApiProvider(state.sessionToken).getPlaceDetailFromId(result.placeId);
-    // addressTextChanged(placeDetails);
+    final placeDetails = await GooglePlaceApiProvider(state.sessionToken)
+        .getPlaceDetailFromId(result.placeId);
+
+    convertPlaceToCoordinatesAndMoveCamera(placeDetails);
+    // addressTextChanged(placeDetails.toString());
+  }
+
+  void convertPlaceToCoordinatesAndMoveCamera(Place placeDetails) async {
+    // final query = "1600 Amphiteatre Parkway, Mountain View";
+    final query =
+        "${placeDetails.streetNumber} ${placeDetails.street} ${placeDetails.city} ${placeDetails.zipCode}";
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    print("${first.featureName} : ${first.coordinates}");
+
+    state.mapController != null
+        ? state.mapController!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(
+                  first.coordinates.latitude,
+                  first.coordinates.longitude,
+                ),
+                zoom: 18.0,
+              ),
+            ),
+          )
+        : print("mapController state null");
   }
 
   Future<void> _validateInputs() async {
@@ -166,8 +193,9 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     }
 
     errorState = errorState.copyWith(destinationMarkErrorMessage: null);
-    if(state.markers.length == 0){
-      errorState = errorState.copyWith(destinationMarkErrorMessage: 'Please mark a destination');
+    if (state.markers.length == 0) {
+      errorState = errorState.copyWith(
+          destinationMarkErrorMessage: 'Please mark a destination');
     }
 
     state = errorState;
@@ -179,7 +207,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     );
     _validateInputs();
 
-    if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
+    if (state.nameErrorMessage == null &&
+        state.destinationMarkErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
       );
@@ -220,7 +249,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     );
     _validateInputs();
 
-    if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
+    if (state.nameErrorMessage == null &&
+        state.destinationMarkErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
       );
@@ -234,7 +264,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
       );
 
       if (!state.hasSqlFailure) {
-        final failureOrSuccess = await _alarmRepository.updateAlarm(updatedAlarm);
+        final failureOrSuccess =
+            await _alarmRepository.updateAlarm(updatedAlarm);
 
         failureOrSuccess.fold((failure) {
           failure.maybeWhen(

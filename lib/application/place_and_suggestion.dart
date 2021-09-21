@@ -13,7 +13,8 @@ class Place {
 
   @override
   String toString() {
-    return 'Place(streetNumber: $streetNumber, street: $street, city: $city, zipCode: $zipCode)';
+    return '$streetNumber, $street, $city, $zipCode)';
+    // place.streetnumber place.street place.city place.zipcode 
   }
 }
 

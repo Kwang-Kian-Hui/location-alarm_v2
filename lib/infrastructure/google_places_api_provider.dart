@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:country_codes/country_codes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:location_alarm/application/place_and_suggestion.dart';
 
@@ -11,11 +12,17 @@ class GooglePlaceApiProvider{
   GooglePlaceApiProvider(this.sessionToken);
 
   Future<List<Suggestion>> fetchSuggestions(String input) async {
+    Locale locale = CountryCodes.getDeviceLocale()!;
+    String? country = locale.countryCode;
+    print(country);
     var uri = Uri.parse('');
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String request =
-      '$baseURL?input=$input&types=address&key=$apiKey&sessiontoken=$sessionToken';
+    String type = 'address';
+
+    String request = country != null ?
+      '$baseURL?input=$input&types=$type&components=country:$country&key=$apiKey&sessiontoken=$sessionToken'
+      : '$baseURL?input=$input&types=$type&key=$apiKey&sessiontoken=$sessionToken';
     // final request =
     //     ('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&components=country:ch&key=$apiKey&sessiontoken=$sessionToken';
     try{

@@ -41,6 +41,8 @@ dependencies:
   uuid: ^3.0.4 # generate session token
   http: ^0.13.3 # make http requests to get autocomplete suggestions 
   package_info_plus_web: ^1.0.4 # fix missing package for generated_plugin_registrant?
+  geocoder: ^0.2.1 # get address latlng to move camera
+  country_codes: ^2.0.0 # get country code for google autocomplete suggestions
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
