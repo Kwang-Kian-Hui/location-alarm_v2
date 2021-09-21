@@ -24,6 +24,7 @@ class _$AddEditAlarmFormStateTearOff {
       required bool hasSqlFailure,
       required bool hasMapLoaded,
       required bool hasInitialPositionLoaded,
+      required String? sessionToken,
       required GoogleMapController? mapController,
       required Set<Marker> markers,
       required Set<Circle> circles,
@@ -44,6 +45,7 @@ class _$AddEditAlarmFormStateTearOff {
       hasSqlFailure: hasSqlFailure,
       hasMapLoaded: hasMapLoaded,
       hasInitialPositionLoaded: hasInitialPositionLoaded,
+      sessionToken: sessionToken,
       mapController: mapController,
       markers: markers,
       circles: circles,
@@ -72,6 +74,7 @@ mixin _$AddEditAlarmFormState {
   bool get hasSqlFailure => throw _privateConstructorUsedError;
   bool get hasMapLoaded => throw _privateConstructorUsedError;
   bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
+  String? get sessionToken => throw _privateConstructorUsedError;
   GoogleMapController? get mapController => throw _privateConstructorUsedError;
   Set<Marker> get markers => throw _privateConstructorUsedError;
   Set<Circle> get circles => throw _privateConstructorUsedError;
@@ -104,6 +107,7 @@ abstract class $AddEditAlarmFormStateCopyWith<$Res> {
       bool hasSqlFailure,
       bool hasMapLoaded,
       bool hasInitialPositionLoaded,
+      String? sessionToken,
       GoogleMapController? mapController,
       Set<Marker> markers,
       Set<Circle> circles,
@@ -136,6 +140,7 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? hasSqlFailure = freezed,
     Object? hasMapLoaded = freezed,
     Object? hasInitialPositionLoaded = freezed,
+    Object? sessionToken = freezed,
     Object? mapController = freezed,
     Object? markers = freezed,
     Object? circles = freezed,
@@ -178,6 +183,10 @@ class _$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.hasInitialPositionLoaded
           : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
+      sessionToken: sessionToken == freezed
+          ? _value.sessionToken
+          : sessionToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       mapController: mapController == freezed
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -245,6 +254,7 @@ abstract class _$AddEditAlarmFormStateCopyWith<$Res>
       bool hasSqlFailure,
       bool hasMapLoaded,
       bool hasInitialPositionLoaded,
+      String? sessionToken,
       GoogleMapController? mapController,
       Set<Marker> markers,
       Set<Circle> circles,
@@ -279,6 +289,7 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
     Object? hasSqlFailure = freezed,
     Object? hasMapLoaded = freezed,
     Object? hasInitialPositionLoaded = freezed,
+    Object? sessionToken = freezed,
     Object? mapController = freezed,
     Object? markers = freezed,
     Object? circles = freezed,
@@ -321,6 +332,10 @@ class __$AddEditAlarmFormStateCopyWithImpl<$Res>
           ? _value.hasInitialPositionLoaded
           : hasInitialPositionLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
+      sessionToken: sessionToken == freezed
+          ? _value.sessionToken
+          : sessionToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       mapController: mapController == freezed
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -384,6 +399,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       required this.hasSqlFailure,
       required this.hasMapLoaded,
       required this.hasInitialPositionLoaded,
+      required this.sessionToken,
       required this.mapController,
       required this.markers,
       required this.circles,
@@ -413,6 +429,8 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
   @override
   final bool hasInitialPositionLoaded;
   @override
+  final String? sessionToken;
+  @override
   final GoogleMapController? mapController;
   @override
   final Set<Marker> markers;
@@ -439,7 +457,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
 
   @override
   String toString() {
-    return 'AddEditAlarmFormState(showErrorMessage: $showErrorMessage, isInit: $isInit, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, destinationMarkErrorMessage: $destinationMarkErrorMessage, alarmId: $alarmId, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddressController: $destAddressController)';
+    return 'AddEditAlarmFormState(showErrorMessage: $showErrorMessage, isInit: $isInit, isSaving: $isSaving, successful: $successful, hasSqlFailure: $hasSqlFailure, hasMapLoaded: $hasMapLoaded, hasInitialPositionLoaded: $hasInitialPositionLoaded, sessionToken: $sessionToken, mapController: $mapController, markers: $markers, circles: $circles, currentPosition: $currentPosition, nameErrorMessage: $nameErrorMessage, destinationMarkErrorMessage: $destinationMarkErrorMessage, alarmId: $alarmId, alarmName: $alarmName, alarmRadius: $alarmRadius, destLat: $destLat, destLng: $destLng, destAddressController: $destAddressController)';
   }
 
   @override
@@ -467,6 +485,9 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
                 const DeepCollectionEquality().equals(
                     other.hasInitialPositionLoaded,
                     hasInitialPositionLoaded)) &&
+            (identical(other.sessionToken, sessionToken) ||
+                const DeepCollectionEquality()
+                    .equals(other.sessionToken, sessionToken)) &&
             (identical(other.mapController, mapController) ||
                 const DeepCollectionEquality()
                     .equals(other.mapController, mapController)) &&
@@ -495,9 +516,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
             (identical(other.alarmRadius, alarmRadius) ||
                 const DeepCollectionEquality()
                     .equals(other.alarmRadius, alarmRadius)) &&
-            (identical(other.destLat, destLat) ||
-                const DeepCollectionEquality()
-                    .equals(other.destLat, destLat)) &&
+            (identical(other.destLat, destLat) || const DeepCollectionEquality().equals(other.destLat, destLat)) &&
             (identical(other.destLng, destLng) || const DeepCollectionEquality().equals(other.destLng, destLng)) &&
             (identical(other.destAddressController, destAddressController) || const DeepCollectionEquality().equals(other.destAddressController, destAddressController)));
   }
@@ -512,6 +531,7 @@ class _$_AddEditAlarmFormState extends _AddEditAlarmFormState {
       const DeepCollectionEquality().hash(hasSqlFailure) ^
       const DeepCollectionEquality().hash(hasMapLoaded) ^
       const DeepCollectionEquality().hash(hasInitialPositionLoaded) ^
+      const DeepCollectionEquality().hash(sessionToken) ^
       const DeepCollectionEquality().hash(mapController) ^
       const DeepCollectionEquality().hash(markers) ^
       const DeepCollectionEquality().hash(circles) ^
@@ -541,6 +561,7 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
           required bool hasSqlFailure,
           required bool hasMapLoaded,
           required bool hasInitialPositionLoaded,
+          required String? sessionToken,
           required GoogleMapController? mapController,
           required Set<Marker> markers,
           required Set<Circle> circles,
@@ -570,6 +591,8 @@ abstract class _AddEditAlarmFormState extends AddEditAlarmFormState {
   bool get hasMapLoaded => throw _privateConstructorUsedError;
   @override
   bool get hasInitialPositionLoaded => throw _privateConstructorUsedError;
+  @override
+  String? get sessionToken => throw _privateConstructorUsedError;
   @override
   GoogleMapController? get mapController => throw _privateConstructorUsedError;
   @override

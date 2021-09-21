@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/application/place_and_suggestion.dart';
 import 'package:location_alarm/application/value_validators.dart';
+import 'package:location_alarm/infrastructure/google_places_api_provider.dart';
 import 'package:riverpod/riverpod.dart';
 
 import 'package:location_alarm/application/addedit_alarm_form_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   final AlarmRepository _alarmRepository;
@@ -43,6 +48,10 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
 
   void alarmDestLngChanged(double longitude) {
     state = state.copyWith(destLng: longitude);
+  }
+
+  void addressTextChanged(String address) {
+    state.destAddressController.text = address;
   }
 
   void initialiseValueForEditAlarmForm(Alarm alarm) {
@@ -82,15 +91,19 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
         await placemarkFromCoordinates(state.destLat, state.destLng);
     final destinationAddress =
         "${destinationPlacemark[0].name},${destinationPlacemark[0].locality},${destinationPlacemark[0].postalCode},${destinationPlacemark[0].country}";
-    state.destAddressController.text = destinationAddress;
+    addressTextChanged(destinationAddress);
 
     createNewMarkerAndCircle();
+  }
+
+  Future<void> initialiseSession() async {
+    initialiseMarkersAndCircles();
+    state = state.copyWith(sessionToken: Uuid().v4());
   }
 
   void addOrUpdateNewMarker(LatLng newLatLng) async {
     List<Placemark> destinationPlacemark =
         await placemarkFromCoordinates(newLatLng.latitude, newLatLng.longitude);
-    // _destinationLatLng = LatLng(newLatLng.latitude, newLatLng.longitude);
     alarmDestLatChanged(newLatLng.latitude);
     alarmDestLngChanged(newLatLng.longitude);
     final destinationAddress =
@@ -100,7 +113,7 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     createNewMarkerAndCircle();
   }
 
-  void createNewMarkerAndCircle(){
+  void createNewMarkerAndCircle() {
     Marker newMarker = Marker(
       markerId: MarkerId('${LatLng(state.destLat, state.destLng)}'),
       position: LatLng(
@@ -137,6 +150,37 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     }
   }
 
+  void retrieveResultAddressDetail(Suggestion result) async {
+    final placeDetails = await GooglePlaceApiProvider(state.sessionToken)
+        .getPlaceDetailFromId(result.placeId);
+
+    convertPlaceToCoordinatesAndMoveCamera(placeDetails);
+  }
+
+  void convertPlaceToCoordinatesAndMoveCamera(Place placeDetails) async {
+    final query =
+        "${placeDetails.streetNumber} ${placeDetails.street} ${placeDetails.city} ${placeDetails.zipCode}";
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    print("${first.featureName} : ${first.coordinates}");
+
+    if(first.coordinates.latitude != null && first.coordinates.longitude != null){
+      state.mapController != null
+        ? state.mapController!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(
+                  first.coordinates.latitude,
+                  first.coordinates.longitude,
+                ),
+                zoom: 18.0,
+              ),
+            ),
+          )
+        : null;
+    }
+  }
+
   Future<void> _validateInputs() async {
     var errorState = state.copyWith(showErrorMessage: true);
     //validate name
@@ -148,8 +192,9 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     }
 
     errorState = errorState.copyWith(destinationMarkErrorMessage: null);
-    if(state.markers.length == 0){
-      errorState = errorState.copyWith(destinationMarkErrorMessage: 'Please mark a destination');
+    if (state.markers.length == 0) {
+      errorState = errorState.copyWith(
+          destinationMarkErrorMessage: 'Please mark a destination');
     }
 
     state = errorState;
@@ -161,7 +206,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     );
     _validateInputs();
 
-    if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
+    if (state.nameErrorMessage == null &&
+        state.destinationMarkErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
       );
@@ -202,7 +248,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
     );
     _validateInputs();
 
-    if (state.nameErrorMessage == null && state.destinationMarkErrorMessage == null) {
+    if (state.nameErrorMessage == null &&
+        state.destinationMarkErrorMessage == null) {
       state = state.copyWith(
         isSaving: true,
       );
@@ -216,7 +263,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
       );
 
       if (!state.hasSqlFailure) {
-        final failureOrSuccess = await _alarmRepository.updateAlarm(updatedAlarm);
+        final failureOrSuccess =
+            await _alarmRepository.updateAlarm(updatedAlarm);
 
         failureOrSuccess.fold((failure) {
           failure.maybeWhen(

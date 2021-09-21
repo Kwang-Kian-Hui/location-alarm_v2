@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location_alarm/application/place_and_suggestion.dart';
+import 'package:location_alarm/application/search_address.dart';
 import 'package:location_alarm/shared/providers.dart';
 
 Widget zoomInAndOutButton(height, mapController) {
@@ -135,20 +137,25 @@ Widget topFormBar(double height, double width, BuildContext context,
   );
 }
 
-Widget searchAddressBar(double height, double width, BuildContext context, WidgetRef ref) {
-    return Container(
-      width: width * 0.7,
-      height: height * 0.08,
-      child: TextFormField(
-      controller: ref.watch(addEditAlarmFormNotifierProvider).destAddressController,
+Widget searchAddressBar(
+    double height, double width, BuildContext context, WidgetRef ref) {
+    // final refNotifier = ref.read(addEditAlarmFormNotifierProvider.notifier);
+  return Container(
+    width: width * 0.7,
+    height: height * 0.08,
+    child: TextFormField(
+      readOnly: true,
+      controller:
+          ref.watch(addEditAlarmFormNotifierProvider).destAddressController,
       decoration: InputDecoration(
-        labelText: ref.watch(addEditAlarmFormNotifierProvider
-                .select((state) => state.destinationMarkErrorMessage)) == null ? "Enter address" : null,
+        // labelText: ref.watch(addEditAlarmFormNotifierProvider
+        //         .select((state) => state.destinationMarkErrorMessage)) == null ? "Enter address" : null,
         errorText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.showErrorMessage))
             ? ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.destinationMarkErrorMessage))
             : null,
+        hintText: 'Enter destination address',
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.blue,
@@ -162,9 +169,19 @@ Widget searchAddressBar(double height, double width, BuildContext context, Widge
           ),
         ),
       ),
+      onTap: () async {
+        final Suggestion? result =
+            await showSearch(context: context, delegate: SearchAddress(
+              ref.read(addEditAlarmFormNotifierProvider).sessionToken
+            ));
+        print(result);
+        if(result != null){
+          ref.read(addEditAlarmFormNotifierProvider.notifier).retrieveResultAddressDetail(result);
+        }
+      },
     ),
-    );
-  }
+  );
+}
 
 Widget centerCurrentAndDestLocation(
     height, width, GoogleMapController mapController, WidgetRef ref) {
@@ -229,12 +246,17 @@ Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
     child: TextFormField(
       initialValue: ref.read(addEditAlarmFormNotifierProvider).alarmName,
       onChanged: (newName) {
-        ref.read(addEditAlarmFormNotifierProvider.notifier).alarmNameChanged(newName);
+        ref
+            .read(addEditAlarmFormNotifierProvider.notifier)
+            .alarmNameChanged(newName);
       },
       decoration: InputDecoration(
         focusColor: Colors.black,
         labelText: ref.watch(addEditAlarmFormNotifierProvider
-                .select((state) => state.nameErrorMessage)) == null ? "Enter alarm name" : null,
+                    .select((state) => state.nameErrorMessage)) ==
+                null
+            ? "Enter alarm name"
+            : null,
         errorText: ref.watch(addEditAlarmFormNotifierProvider
                 .select((state) => state.showErrorMessage))
             ? ref.watch(addEditAlarmFormNotifierProvider
@@ -311,12 +333,12 @@ Widget submitFormButton(
       ),
       onPressed: () {
         FocusScope.of(context).unfocus();
-        if(ref.read(addEditAlarmFormNotifierProvider).isInit == false){
+        if (ref.read(addEditAlarmFormNotifierProvider).isInit == false) {
           ref.read(addEditAlarmFormNotifierProvider.notifier).updateAlarm();
-        }else{
+        } else {
           ref.read(addEditAlarmFormNotifierProvider.notifier).addAlarm();
         }
-        
+
         ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
       },
     ),
