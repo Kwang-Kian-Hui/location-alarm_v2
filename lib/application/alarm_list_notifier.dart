@@ -121,7 +121,6 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
           }
         }
       }
-      //TODO: play full alarm based on duration?
       if (ringAlarm) {
         if (!alarmPlaying) {
           alarmPlaying = true;

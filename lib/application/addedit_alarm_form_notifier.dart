@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -103,7 +104,6 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   void addOrUpdateNewMarker(LatLng newLatLng) async {
     List<Placemark> destinationPlacemark =
         await placemarkFromCoordinates(newLatLng.latitude, newLatLng.longitude);
-    // _destinationLatLng = LatLng(newLatLng.latitude, newLatLng.longitude);
     alarmDestLatChanged(newLatLng.latitude);
     alarmDestLngChanged(newLatLng.longitude);
     final destinationAddress =
@@ -151,23 +151,21 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
   }
 
   void retrieveResultAddressDetail(Suggestion result) async {
-    // GooglePlaceApiProvider() getPlaceDetailFromId
     final placeDetails = await GooglePlaceApiProvider(state.sessionToken)
         .getPlaceDetailFromId(result.placeId);
 
     convertPlaceToCoordinatesAndMoveCamera(placeDetails);
-    // addressTextChanged(placeDetails.toString());
   }
 
   void convertPlaceToCoordinatesAndMoveCamera(Place placeDetails) async {
-    // final query = "1600 Amphiteatre Parkway, Mountain View";
     final query =
         "${placeDetails.streetNumber} ${placeDetails.street} ${placeDetails.city} ${placeDetails.zipCode}";
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
     var first = addresses.first;
     print("${first.featureName} : ${first.coordinates}");
 
-    state.mapController != null
+    if(first.coordinates.latitude != null && first.coordinates.longitude != null){
+      state.mapController != null
         ? state.mapController!.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
@@ -179,7 +177,8 @@ class AddEditAlarmFormNotifier extends StateNotifier<AddEditAlarmFormState> {
               ),
             ),
           )
-        : print("mapController state null");
+        : null;
+    }
   }
 
   Future<void> _validateInputs() async {

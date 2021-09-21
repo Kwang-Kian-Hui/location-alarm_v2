@@ -23,8 +23,6 @@ class GooglePlaceApiProvider{
     String request = country != null ?
       '$baseURL?input=$input&types=$type&components=country:$country&key=$apiKey&sessiontoken=$sessionToken'
       : '$baseURL?input=$input&types=$type&key=$apiKey&sessiontoken=$sessionToken';
-    // final request =
-    //     ('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&components=country:ch&key=$apiKey&sessiontoken=$sessionToken';
     try{
       uri = Uri.parse(request);
     }

@@ -15,7 +15,7 @@ class AlarmSettingsScreen extends ConsumerStatefulWidget {
 class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    int alarmType = ModalRoute.of(context)!.settings.arguments as int;
+    // int alarmType = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
