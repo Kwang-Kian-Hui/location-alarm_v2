@@ -122,17 +122,17 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
         }
       }
       if (ringAlarm) {
+        final pref = await SharedPreferences.getInstance();
+        final alarmType = pref.getInt('alarmType');
         if (!alarmPlaying) {
           alarmPlaying = true;
-          final pref = await SharedPreferences.getInstance();
-          final alarmType = pref.getInt('alarmType');
           if (alarmType == 1) FlutterRingtonePlayer.playAlarm(); //alarm
           if (alarmType == 2) {
             Vibrate.vibrate();
             FlutterRingtonePlayer.playAlarm(); //alarm and vibrate
           }
-          if (alarmType == 3) Vibrate.vibrate();
         }
+        if (alarmType == 3) Vibrate.vibrate();
       } else {
         if (alarmPlaying) {
           FlutterRingtonePlayer.stop();
