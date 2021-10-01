@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location_alarm/application/place_and_suggestion.dart';
 import 'package:location_alarm/application/search_address.dart';
 import 'package:location_alarm/shared/providers.dart';
+
+
+// TODO: based on device height and width, do diff values
 
 Widget zoomInAndOutButton(height, mapController) {
   return Positioned(
@@ -18,8 +22,8 @@ Widget zoomInAndOutButton(height, mapController) {
             child: InkWell(
               splashColor: Colors.black,
               child: SizedBox(
-                width: height / 10,
-                height: height / 10,
+                width: 40.h,
+                height: 40.h,
                 child: Icon(Icons.add),
               ),
               onTap: () {
@@ -37,8 +41,8 @@ Widget zoomInAndOutButton(height, mapController) {
             child: InkWell(
               splashColor: Colors.black,
               child: SizedBox(
-                width: height / 10,
-                height: height / 10,
+                width: 40.h,
+                height: 40.h,
                 child: Icon(Icons.remove),
               ),
               onTap: () {
@@ -61,8 +65,8 @@ Widget camMoveToCurrentLocationButton(double height, double width,
     right: 10,
     child: ClipOval(
       child: Container(
-        width: 60,
-        height: 60,
+        width: 60.h,
+        height: 60.h,
         color: Colors.grey[300], // button color
         child: IconButton(
           icon: Icon(Icons.my_location),
@@ -110,22 +114,16 @@ Widget topFormBar(double height, double width, BuildContext context,
                 const Text("Destination"),
                 const SizedBox(height: 10),
                 // style text maybe?
-                Row(
-                  children: [
-                    searchAddressBar(height, width, context, ref),
-                    SizedBox(width: width * 0.01),
-                    centerCurrentAndDestLocation(
-                        height, width, mapController, ref),
-                  ],
-                ),
+                searchAddressBar(context, ref),
+                const SizedBox(height: 10),
+                alarmNameTextFormField(ref),
                 const SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    alarmNameTextFormField(height, width, ref),
-                    SizedBox(width: width * 0.01),
-                    alarmRadiusDropdownMenu(height, width, ref),
-                    SizedBox(width: width * 0.01),
-                    submitFormButton(height, width, context, ref),
+                    centerCurrentAndDestLocation(mapController, ref),
+                    alarmRadiusDropdownMenu(ref),
+                    submitFormButton(context, ref),
                   ],
                 ),
               ],
@@ -137,12 +135,10 @@ Widget topFormBar(double height, double width, BuildContext context,
   );
 }
 
-Widget searchAddressBar(
-    double height, double width, BuildContext context, WidgetRef ref) {
+Widget searchAddressBar(BuildContext context, WidgetRef ref) {
     // final refNotifier = ref.read(addEditAlarmFormNotifierProvider.notifier);
   return Container(
-    width: width * 0.7,
-    height: height * 0.08,
+    width: 350.w,
     child: TextFormField(
       readOnly: true,
       controller:
@@ -179,19 +175,21 @@ Widget searchAddressBar(
           ref.read(addEditAlarmFormNotifierProvider.notifier).retrieveResultAddressDetail(result);
         }
       },
+      style: TextStyle(
+        fontSize: 16.sp
+      ),
     ),
   );
 }
 
-Widget centerCurrentAndDestLocation(
-    height, width, GoogleMapController mapController, WidgetRef ref) {
+Widget centerCurrentAndDestLocation(GoogleMapController mapController, WidgetRef ref) {
   final currentPosition =
       ref.read(addEditAlarmFormNotifierProvider).currentPosition;
   final destLat = ref.read(addEditAlarmFormNotifierProvider).destLat;
   final destLng = ref.read(addEditAlarmFormNotifierProvider).destLng;
   return Container(
-    width: width * 0.12,
-    height: height * 0.08,
+    width: 75.w,
+    height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
@@ -239,10 +237,9 @@ Widget centerCurrentAndDestLocation(
   );
 }
 
-Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
+Widget alarmNameTextFormField(WidgetRef ref) {
   return Container(
-    width: width * 0.458,
-    height: height * 0.08,
+    width: 350.w,
     child: TextFormField(
       initialValue: ref.read(addEditAlarmFormNotifierProvider).alarmName,
       onChanged: (newName) {
@@ -275,15 +272,18 @@ Widget alarmNameTextFormField(double height, double width, WidgetRef ref) {
           ),
         ),
       ),
+      style: TextStyle(
+        fontSize: 16.sp,
+      ),
     ),
   );
 }
 
-Widget alarmRadiusDropdownMenu(double height, double width, WidgetRef ref) {
+Widget alarmRadiusDropdownMenu(WidgetRef ref) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10),
-    width: width * 0.23,
-    height: height * 0.08,
+    width: 125.w,
+    height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
@@ -315,11 +315,10 @@ Widget alarmRadiusDropdownMenu(double height, double width, WidgetRef ref) {
   );
 }
 
-Widget submitFormButton(
-    double height, double width, BuildContext context, WidgetRef ref) {
+Widget submitFormButton(BuildContext context, WidgetRef ref) {
   return Container(
-    width: width * 0.12,
-    height: height * 0.08,
+    width: 75.w,
+    height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(
