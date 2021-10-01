@@ -114,21 +114,16 @@ Widget topFormBar(double height, double width, BuildContext context,
                 const Text("Destination"),
                 const SizedBox(height: 10),
                 // style text maybe?
-                Row(
-                  children: [
-                    searchAddressBar(width, context, ref),
-                    SizedBox(width: width * 0.01),
-                    centerCurrentAndDestLocation(width, mapController, ref),
-                  ],
-                ),
+                searchAddressBar(context, ref),
+                const SizedBox(height: 10),
+                alarmNameTextFormField(ref),
                 const SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    alarmNameTextFormField(width, ref),
-                    SizedBox(width: width * 0.01),
-                    alarmRadiusDropdownMenu(width, ref),
-                    SizedBox(width: width * 0.01),
-                    submitFormButton(width, context, ref),
+                    centerCurrentAndDestLocation(mapController, ref),
+                    alarmRadiusDropdownMenu(ref),
+                    submitFormButton(context, ref),
                   ],
                 ),
               ],
@@ -140,10 +135,10 @@ Widget topFormBar(double height, double width, BuildContext context,
   );
 }
 
-Widget searchAddressBar(double width, BuildContext context, WidgetRef ref) {
+Widget searchAddressBar(BuildContext context, WidgetRef ref) {
     // final refNotifier = ref.read(addEditAlarmFormNotifierProvider.notifier);
   return Container(
-    width: width * 0.7,
+    width: 350.w,
     child: TextFormField(
       readOnly: true,
       controller:
@@ -187,13 +182,13 @@ Widget searchAddressBar(double width, BuildContext context, WidgetRef ref) {
   );
 }
 
-Widget centerCurrentAndDestLocation(double width, GoogleMapController mapController, WidgetRef ref) {
+Widget centerCurrentAndDestLocation(GoogleMapController mapController, WidgetRef ref) {
   final currentPosition =
       ref.read(addEditAlarmFormNotifierProvider).currentPosition;
   final destLat = ref.read(addEditAlarmFormNotifierProvider).destLat;
   final destLng = ref.read(addEditAlarmFormNotifierProvider).destLng;
   return Container(
-    width: width * 0.12,
+    width: 75.w,
     height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
@@ -242,10 +237,9 @@ Widget centerCurrentAndDestLocation(double width, GoogleMapController mapControl
   );
 }
 
-Widget alarmNameTextFormField(double width, WidgetRef ref) {
+Widget alarmNameTextFormField(WidgetRef ref) {
   return Container(
-    width: width * 0.458,
-    height: 55.h,
+    width: 350.w,
     child: TextFormField(
       initialValue: ref.read(addEditAlarmFormNotifierProvider).alarmName,
       onChanged: (newName) {
@@ -285,10 +279,10 @@ Widget alarmNameTextFormField(double width, WidgetRef ref) {
   );
 }
 
-Widget alarmRadiusDropdownMenu(double width, WidgetRef ref) {
+Widget alarmRadiusDropdownMenu(WidgetRef ref) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10),
-    width: width * 0.23,
+    width: 125.w,
     height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
@@ -321,9 +315,9 @@ Widget alarmRadiusDropdownMenu(double width, WidgetRef ref) {
   );
 }
 
-Widget submitFormButton(double width, BuildContext context, WidgetRef ref) {
+Widget submitFormButton(BuildContext context, WidgetRef ref) {
   return Container(
-    width: width * 0.12,
+    width: 75.w,
     height: 55.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
