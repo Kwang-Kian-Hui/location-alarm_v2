@@ -58,44 +58,65 @@ class _AlarmSettingsScreenState extends ConsumerState<AlarmSettingsScreen> {
                   children: [
                     Flexible(
                       fit: FlexFit.tight,
-                      child: TextButton(
-                        child: Text(
-                          'Ringtone Only',
-                          style: ThemeData().textTheme.bodyText2,
+                      child: Card(
+                        elevation: 1,
+                        child: Container(
+                          height: 50.h,
+                          child: TextButton(
+                            child: Text(
+                              'Ringtone Only',
+                              style: ThemeData().textTheme.bodyText2,
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () async {
+                              final pref = await SharedPreferences.getInstance();
+                              // might want to shift this elsewhere to test
+                              await pref.setInt('alarmType', 1);
+                            },
+                          ),
                         ),
-                        onPressed: () async {
-                          final pref = await SharedPreferences.getInstance();
-                          // might want to shift this elsewhere to test
-                          await pref.setInt('alarmType', 1);
-                        },
                       ),
                     ),
                     Flexible(
                       fit: FlexFit.tight,
-                      child: TextButton(
-                        child: Text(
-                          'Ringtone & Vibrate',
-                          style: ThemeData().textTheme.bodyText2,
+                      child: Card(
+                        elevation: 1,
+                        child: Container(
+                          height: 50.h,
+                          child: TextButton(
+                            child: Text(
+                              'Ringtone & Vibrate',
+                              style: ThemeData().textTheme.bodyText2,
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () async {
+                              final pref = await SharedPreferences.getInstance();
+                              // might want to shift this elsewhere to test
+                              await pref.setInt('alarmType', 2);
+                            },
+                          ),
                         ),
-                        onPressed: () async {
-                          final pref = await SharedPreferences.getInstance();
-                          // might want to shift this elsewhere to test
-                          await pref.setInt('alarmType', 2);
-                        },
                       ),
                     ),
                     Flexible(
                       fit: FlexFit.tight,
-                      child: TextButton(
-                        child: Text(
-                          'Vibrate Only',
-                          style: ThemeData().textTheme.bodyText2,
+                      child: Card(
+                        elevation: 1,
+                        child: Container(
+                          height: 50.h,
+                          child: TextButton(
+                            child: Text(
+                              'Vibrate Only',
+                              style: ThemeData().textTheme.bodyText2,
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () async {
+                              final pref = await SharedPreferences.getInstance();
+                              // might want to shift this elsewhere to test
+                              await pref.setInt('alarmType', 3);
+                            },
+                          ),
                         ),
-                        onPressed: () async {
-                          final pref = await SharedPreferences.getInstance();
-                          // might want to shift this elsewhere to test
-                          await pref.setInt('alarmType', 3);
-                        },
                       ),
                     ),
                   ],
