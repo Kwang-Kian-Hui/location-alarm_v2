@@ -132,7 +132,7 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
             FlutterRingtonePlayer.playAlarm(); //alarm and vibrate
           }
         }
-        if (alarmType == 3) Vibrate.vibrate();
+        if (alarmType == 2 || alarmType == 3) Vibrate.vibrate();
       } else {
         if (alarmPlaying) {
           FlutterRingtonePlayer.stop();
