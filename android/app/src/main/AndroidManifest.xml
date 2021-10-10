@@ -10,8 +10,7 @@
         android:label="Location Alarm"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBOTao6mJOtvjf8mMCQJWsMKoAgNt17ORo"/>
-
+            android:value="[Maps-API-KEY]"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
