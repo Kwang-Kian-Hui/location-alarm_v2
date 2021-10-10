@@ -1,4 +1,4 @@
-package khkhkhkh
+package com.location_alarm
 
 import io.flutter.embedding.android.FlutterActivity
 

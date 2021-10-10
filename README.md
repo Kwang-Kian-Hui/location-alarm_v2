@@ -1,6 +1,7 @@
 # location_alarm
 
-API key in the google_places_api_provider.dart file is an old API key used.
+Old API key id present in the google_places_api_provider.dart and AndroidManifest files are replaced with a placeholder string.
+Keys are regenerated for respective APIs.
 
 ## Getting Started
 

@@ -1,28 +1,26 @@
 import 'dart:convert';
-import 'package:country_codes/country_codes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:location_alarm/application/network.dart';
 import 'package:location_alarm/application/place_and_suggestion.dart';
 
 class GooglePlaceApiProvider{
   final sessionToken;
   final client = Client();
-  static final apiKey = 'AIzaSyD_ZwoOac7eDFaofXA52tMxoE6EIzU5nvo';
+  static final apiKey = '[Places-API-KEY]';
 
   GooglePlaceApiProvider(this.sessionToken);
 
   Future<List<Suggestion>> fetchSuggestions(String input) async {
-    Locale locale = CountryCodes.getDeviceLocale()!;
-    String? country = locale.countryCode;
-    print(country);
+    Network n = new Network("http://ip-api.com/json");
+    String locationSTR = (await n.getData());
+    var locationx = jsonDecode(locationSTR);
+    String countryCode = locationx["countryCode"];
     var uri = Uri.parse('');
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String type = 'address';
 
-    String request = country != null ?
-      '$baseURL?input=$input&types=$type&components=country:$country&key=$apiKey&sessiontoken=$sessionToken'
-      : '$baseURL?input=$input&types=$type&key=$apiKey&sessiontoken=$sessionToken';
+    String request = '$baseURL?input=$input&types=$type&components=country:$countryCode&key=$apiKey&sessiontoken=$sessionToken';
     try{
       uri = Uri.parse(request);
     }
