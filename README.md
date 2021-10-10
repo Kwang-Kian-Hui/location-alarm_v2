@@ -1,6 +1,6 @@
 # location_alarm
 
-A new Flutter project.
+API key in the google_places_api_provider.dart file is an old API key used.
 
 ## Getting Started
 
