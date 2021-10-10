@@ -3,15 +3,19 @@
 Old API key id present in the google_places_api_provider.dart and AndroidManifest files are replaced with a placeholder string.
 Keys are regenerated for respective APIs.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Credits: 
+1) Google Places autocomplete 
+Profile: https://medium.com/@yshean
+Solution/Help source: https://medium.com/comerge/location-search-autocomplete-in-flutter-84f155d44721
+Thanks to Yong Shean for the robust guide in setting up Google Places autocomplete, allowing me to greatly reduce the time needed to develop that feature into my app.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2) Improvement made to method of country code retrieval
+Profile: https://stackoverflow.com/users/3736063/malek-tubaisaht
+Solution/Help source: https://stackoverflow.com/questions/57977167/device-country-in-flutter
+Thanks to Malek Tubaisaht for providing a solution to a related question on Stackoverflow, allowing me to get the country code of the device's current location.
+
+Previously, country code retrieved is from locale class which retrieves the country code of the primary language selected for the device, not the location.
+
