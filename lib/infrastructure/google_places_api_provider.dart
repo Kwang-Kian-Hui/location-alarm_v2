@@ -18,9 +18,8 @@ class GooglePlaceApiProvider{
     var uri = Uri.parse('');
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String type = 'address';
 
-    String request = '$baseURL?input=$input&types=$type&components=country:$countryCode&key=$apiKey&sessiontoken=$sessionToken';
+    String request = '$baseURL?input=$input&components=country:$countryCode&key=$apiKey&sessiontoken=$sessionToken';
     try{
       uri = Uri.parse(request);
     }
