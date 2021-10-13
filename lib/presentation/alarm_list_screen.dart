@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:location_alarm/application/alarm.dart';
@@ -27,10 +28,9 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
     super.initState();
     Future.microtask(() async {
       await ref.read(alarmListNotifierProvider.notifier).getAlarmsList();
-      ref
+      await ref
           .read(alarmListNotifierProvider.notifier)
           .initialiseBackgroundLocation();
-      // ref.read(alarmListNotifierProvider.notifier).initialisePositionStream();
       final pref = await SharedPreferences.getInstance();
       alarmType = pref.getInt('alarmType');
     });
@@ -51,8 +51,9 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(AlarmSettingsScreen.routeName, arguments: alarmType ?? 1),
+            onPressed: () => Navigator.of(context).pushNamed(
+                AlarmSettingsScreen.routeName,
+                arguments: alarmType ?? 1),
           ),
         ],
       ),
@@ -85,11 +86,38 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               child:
                   Text("An error occurred. Please contact support for help."),
             ),
-            loaded: (loaded) => ListView.builder(
-              itemCount: loaded.alarmList.length,
-              itemBuilder: (context, index) => ProviderScope(overrides: [
-                currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
-              ], child: const AlarmListItem()),
+            loaded: (loaded) => RefreshIndicator(
+              child: ListView.builder(
+                itemCount: loaded.alarmList.length,
+                itemBuilder: (context, index) => ProviderScope(overrides: [
+                  currentAlarmItem.overrideWithValue(loaded.alarmList[index]),
+                ], child: const AlarmListItem()),
+              ),
+              onRefresh: () async {
+                await ref
+                    .read(alarmListNotifierProvider.notifier)
+                    .getAlarmsList();
+                final defaultPos = Position(
+                  longitude: 0,
+                  latitude: 0,
+                  timestamp: null,
+                  accuracy: 0.0,
+                  altitude: 0.0,
+                  heading: 0.0,
+                  speed: 0.0,
+                  speedAccuracy: 0.0,
+                );
+                
+                if (ref
+                        .read(alarmListNotifierProvider.notifier)
+                        .currentPosition.value ==
+                    defaultPos) {
+                      print("equal default pos");
+                  await ref
+                      .read(alarmListNotifierProvider.notifier)
+                      .initialiseBackgroundLocation();
+                }
+              },
             ),
           ),
         ],

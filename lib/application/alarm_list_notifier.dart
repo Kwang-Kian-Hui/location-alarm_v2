@@ -16,16 +16,13 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
   final AlarmRepository _alarmRepository;
   AlarmListNotifier(this._alarmRepository)
       : super(const AlarmListState.initial());
-  StreamController<Position> positionStreamController =
-      StreamController<Position>();
-  StreamSubscription<Position>? _positionStreamSubscription;
   ValueNotifier<Position> currentPosition = ValueNotifier<Position>(Position(
       longitude: 0,
       latitude: 0,
       timestamp: null,
       accuracy: 0.0,
       altitude: 0.0,
-      heading: .00,
+      heading: 0.0,
       speed: 0.0,
       speedAccuracy: 0.0));
   bool alarmPlaying = false;
@@ -46,6 +43,8 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
       getListResult.fold(
         (failure) => state = AlarmListState.failure(failure),
         (alarmList) {
+          print("update alarm list");
+          print(currentPosition);
           listOfAlarms = alarmList;
           state = AlarmListState.loaded(alarmList);
         },
@@ -61,8 +60,6 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     updateResult.fold(
       (f) => state = AlarmListState.failure(f),
       (r) => () {
-        // print('override value');
-        // currentAlarmItem.overrideWithValue(alarm);
       },
     );
   }
@@ -76,23 +73,22 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     );
   }
 
-  void initialiseBackgroundLocation() {
-    BackgroundLocation.startLocationService();
-    // BackgroundLocation.getPermissions(
-    //   onGranted: () async {
-    //     print("permission granted background location");
-    //     locationPermission = true;
-    //     await BackgroundLocation.setAndroidConfiguration(1000);
-    //     BackgroundLocation.startLocationService(
-    //         /*distanceFilter : 10*/); //consider using distance filter
-    //   },
-    //   onDenied: () {
-    //     print("permission denied background location");
-    //     locationPermission = false;
-    //   },
-    // );
+  Future<void> initialiseBackgroundLocation() async {
+    await Permission.locationAlways.request();
+
+    if (await Permission.locationAlways.request().isGranted) {
+      locationPermission = true;
+      await BackgroundLocation.setAndroidConfiguration(2);
+      BackgroundLocation.setAndroidNotification(
+        title: "Location Alarm",
+        message: "Background location service is running",
+      );
+      BackgroundLocation.startLocationService();
+    } else {
+      locationPermission = false;
+    }
+
     BackgroundLocation.getLocationUpdates((location) async {
-      // _alarmsList = Provider.of<Alarms>(context, listen: false).alarms;
       Position newPos = Position(
         latitude: location.latitude ?? 0,
         longitude: location.longitude ?? 0,
@@ -142,21 +138,9 @@ class AlarmListNotifier extends StateNotifier<AlarmListState> {
     });
   }
 
-  // void initialisePositionStream() {
-  //   positionStreamController.addStream(Geolocator.getPositionStream(
-  //     intervalDuration: Duration(seconds: 2),
-  //   ));
-  //   _positionStreamSubscription =
-  //       positionStreamController.stream.listen((position) {
-  //     currentPosition.value = position;
-  //   });
-  // }
-
   @override
   void dispose() async {
     await FlutterRingtonePlayer.stop();
-    _positionStreamSubscription?.cancel();
-    positionStreamController.close();
     BackgroundLocation.stopLocationService();
     super.dispose();
   }
