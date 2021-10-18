@@ -57,11 +57,15 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
           ),
         ],
       ),
-      floatingActionButton: IconButton(
-        splashColor: Theme.of(context).primaryColor,
-        icon: const Icon(Icons.add),
-        onPressed: () =>
-            Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+      floatingActionButton: CircleAvatar(
+        radius: 30,
+        backgroundColor: Colors.white24,
+        child: IconButton(
+          splashColor: Theme.of(context).primaryColor,
+          icon: const Icon(Icons.add),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(AddEditAlarmScreen.routeName),
+        ),
       ),
       body: Stack(
         children: [

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:location_alarm/application/initial_launch_notifier.dart';
 import 'package:location_alarm/presentation/addedit_alarm_screen.dart';
 import 'package:location_alarm/presentation/alarm_list_screen.dart';
+import 'package:location_alarm/presentation/prominent_disclosure_screen.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
 import 'package:location_alarm/presentation/themes/color_themes.dart';
 import 'package:location_alarm/presentation/themes/text_themes.dart';
@@ -16,9 +18,13 @@ class LocationApp extends StatefulWidget {
 }
 
 class _LocationAppState extends State<LocationApp> {
+  bool initialLaunch = false;
   @override
   void initState() {
     super.initState();
+    Future.microtask(() async {
+      initialLaunch = await checkIfInitialLaunch();
+    });
   }
 
   @override
@@ -40,8 +46,9 @@ class _LocationAppState extends State<LocationApp> {
           canvasColor: Colors.white,
           textTheme: appTextTheme,
         ),
-        home: AlarmListScreen(),
+        home: initialLaunch ? ProminentDisclosureScreen() : AlarmListScreen(),
         routes: {
+          ProminentDisclosureScreen.routeName: (context) => ProminentDisclosureScreen(),
           AlarmListScreen.routeName: (context) => AlarmListScreen(),
           AlarmSettingsScreen.routeName: (context) => AlarmSettingsScreen(),
           AddEditAlarmScreen.routeName: (context) =>
@@ -51,4 +58,3 @@ class _LocationAppState extends State<LocationApp> {
     );
   }
 }
-
