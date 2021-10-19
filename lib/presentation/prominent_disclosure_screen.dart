@@ -24,8 +24,9 @@ class ProminentDisclosureScreen extends StatelessWidget {
         padding: EdgeInsets.only(top: 100.h, left: 20.w, right: 20.w),
         child: Text(
           "This app collects location data to enable the app to calculate the distance between " +
-              "your destination and your device's location even when the app is minimised or the " +
-              "screen is off.",
+              "your destination and your device's location even when the app is closed or not in use.\n" +
+              "Permission is required for this app to run even when the app is minimised or when the " +
+              "screen is off",
           style: TextStyle(
             fontSize: 20,
           ),
