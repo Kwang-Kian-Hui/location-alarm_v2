@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/application/alarm_list_notifier.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/application/addedit_alarm_form_notifier.dart';

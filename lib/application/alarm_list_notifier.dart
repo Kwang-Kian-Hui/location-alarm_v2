@@ -7,7 +7,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/application/alarm_list_state.dart';
 import 'package:location_alarm/infrastructure/alarm_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';

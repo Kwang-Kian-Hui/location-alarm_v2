@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/database/fields.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';

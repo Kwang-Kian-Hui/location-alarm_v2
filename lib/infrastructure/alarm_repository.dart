@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/infrastructure/alarm_local_service.dart';
 import 'package:location_alarm/infrastructure/custom_failures.dart';
 

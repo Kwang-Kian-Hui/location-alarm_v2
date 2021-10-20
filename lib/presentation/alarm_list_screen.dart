@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/presentation/settings_screen.dart';
 import 'package:location_alarm/presentation/widgets/alarm_list_items.dart';
 import 'package:location_alarm/shared/providers.dart';
