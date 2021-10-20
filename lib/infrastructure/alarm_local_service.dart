@@ -1,4 +1,4 @@
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/database/database.dart';
 
 class AlarmLocalService{

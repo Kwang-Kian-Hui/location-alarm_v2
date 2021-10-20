@@ -6,7 +6,7 @@ import 'package:geocoding/geocoding.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location_alarm/application/alarm.dart';
+import 'package:location_alarm/infrastructure/models/alarm.dart';
 import 'package:location_alarm/application/place_and_suggestion.dart';
 import 'package:location_alarm/application/value_validators.dart';
 import 'package:location_alarm/infrastructure/google_places_api_provider.dart';
